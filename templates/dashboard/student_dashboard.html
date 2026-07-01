@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body class="bg-gray-100">
+
+<div class="flex min-h-screen">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-purple-700 text-white">
+
+        <div class="p-6 text-2xl font-bold border-b border-purple-500">
+            CourseHub
+        </div>
+
+        <nav class="mt-6">
+
+            <a href="#" class="flex items-center px-6 py-3 hover:bg-purple-600">
+                <i class="bi bi-house mr-3"></i> Dashboard
+            </a>
+
+            <a href="#" class="flex items-center px-6 py-3 hover:bg-purple-600">
+                <i class="bi bi-book mr-3"></i> My Courses
+            </a>
+
+            <a href="#" class="flex items-center px-6 py-3 hover:bg-purple-600">
+                <i class="bi bi-pencil-square mr-3"></i> Register Courses
+            </a>
+
+            <a href="#" class="flex items-center px-6 py-3 hover:bg-purple-600">
+                <i class="bi bi-calendar-event mr-3"></i> Timetable
+            </a>
+
+            <a href="#" class="flex items-center px-6 py-3 hover:bg-purple-600">
+                <i class="bi bi-person mr-3"></i> Profile
+            </a>
+
+            <a href="#" class="flex items-center px-6 py-3 hover:bg-purple-600">
+                <i class="bi bi-box-arrow-right mr-3"></i> Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1">
+
+        <!-- Navbar -->
+        <header class="bg-white shadow px-8 py-4 flex justify-between items-center">
+
+            <h1 class="text-2xl font-bold">
+                Student Dashboard
+            </h1>
+
+            <div class="flex items-center space-x-5">
+
+                <i class="bi bi-bell text-2xl"></i>
+
+                <div class="flex items-center">
+
+                    
+                    <span class="ml-3 font-semibold">
+                        Festus
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+        <!-- Dashboard -->
+        <div class="p-8">
+
+            <!-- Welcome -->
+            <div class="bg-white rounded-xl shadow p-6 mb-6">
+
+                <h2 class="text-3xl font-bold">
+                    Welcome Back Festus?
+                </h2>
+
+                <p class="text-gray-500">
+                    Manage your courses and academic progress.
+                </p>
+
+            </div>
+
+            <!-- Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+
+                <div class="bg-white rounded-xl shadow p-6">
+                    <h3 class="text-gray-500">Registered Courses</h3>
+                    <p class="text-3xl font-bold mt-2">6</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow p-6">
+                    <h3 class="text-gray-500">Credit Hours</h3>
+                    <p class="text-3xl font-bold mt-2">18</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow p-6">
+                    <h3 class="text-gray-500">Pending</h3>
+                    <p class="text-3xl font-bold mt-2 text-orange-500">2</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow p-6">
+                    <h3 class="text-gray-500">Announcements</h3>
+                    <p class="text-3xl font-bold mt-2 text-green-500">5</p>
+                </div>
+
+            </div>
+
+            <!-- Table -->
+            <div class="bg-white rounded-xl shadow p-6">
+
+                <h2 class="text-xl font-bold mb-4">
+                    My Registered Courses
+                </h2>
+
+                <table class="w-full">
+
+                    <thead class="bg-gray-100">
+
+                        <tr>
+                            <th class="p-3 text-left">Code</th>
+                            <th class="p-3 text-left">Course</th>
+                            <th class="p-3 text-left">Units</th>
+                            <th class="p-3 text-left">Status</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr class="border-b">
+                            <td class="p-3">DIT401</td>
+                            <td class="p-3">Python Programming</td>
+                            <td class="p-3">3</td>
+                            <td class="p-3">
+                                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full">
+                                    Registered
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr class="border-b">
+                            <td class="p-3">DIT402</td>
+                            <td class="p-3">Database Systems</td>
+                            <td class="p-3">3</td>
+                            <td class="p-3">
+                                <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full">
+                                    Pending
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="p-3">DIT403</td>
+                            <td class="p-3">Computer Networks</td>
+                            <td class="p-3">3</td>
+                            <td class="p-3">
+                                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full">
+                                    Registered
+                                </span>
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

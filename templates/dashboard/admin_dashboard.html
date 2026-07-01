@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body class="bg-gray-100">
+
+<div class="flex min-h-screen">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-blue-900 text-white hidden md:block">
+
+        <div class="p-6 text-2xl font-bold border-b border-blue-700">
+            CRS Admin
+        </div>
+
+        <nav class="mt-6">
+
+            <a href="#" class="block px-6 py-3 bg-blue-700"> Dashboard</a>
+            <a href="#" class="block px-6 py-3 hover:bg-blue-700"> Students</a>
+            <a href="#" class="block px-6 py-3 hover:bg-blue-700"> Courses</a>
+            <a href="#" class="block px-6 py-3 hover:bg-blue-700"> Departments</a>
+            <a href="#" class="block px-6 py-3 hover:bg-blue-700"> Registrations</a>
+            <a href="#" class="block px-6 py-3 hover:bg-blue-700"> Accounts</a>
+            <a href="#" class="block px-6 py-3 hover:bg-blue-700"> Reports</a>
+            <a href="#" class="block px-6 py-3 hover:bg-blue-700"> Settings</a>
+
+        </nav>
+
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1">
+
+        <!-- Navbar -->
+        <header class="bg-white shadow px-6 py-4 flex justify-between items-center">
+
+            <h1 class="text-2xl font-bold">
+                Dashboard
+            </h1>
+
+            <div class="flex items-center gap-4">
+
+                <input
+                    type="text"
+                    placeholder="Search..."
+                    class="border rounded-lg px-4 py-2">
+
+        </header>
+
+        <!-- Content -->
+        <main class="p-6">
+
+            <!-- Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                <div class="bg-white rounded-xl shadow p-6">
+                    <h3 class="text-gray-500">Students</h3>
+                    <p class="text-4xl font-bold mt-2">1,250</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow p-6">
+                    <h3 class="text-gray-500">Courses</h3>
+                    <p class="text-4xl font-bold mt-2">45</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow p-6">
+                    <h3 class="text-gray-500">Departments</h3>
+                    <p class="text-4xl font-bold mt-2">8</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow p-6">
+                    <h3 class="text-gray-500">Registrations</h3>
+                    <p class="text-4xl font-bold mt-2">890</p>
+                </div>
+
+            </div>
+
+            <!-- Table & Actions -->
+            <div class="grid lg:grid-cols-3 gap-6 mt-8">
+
+                <!-- Table -->
+                <div class="lg:col-span-2 bg-white rounded-xl shadow p-6">
+
+                    <h2 class="text-xl font-semibold mb-4">
+                        Recent Registrations
+                    </h2>
+
+                    <table class="w-full">
+
+                        <thead class="bg-gray-100">
+
+                        <tr>
+
+                            <th class="text-left p-3">Student</th>
+                            <th class="text-left p-3">Course</th>
+                            <th class="text-left p-3">Status</th>
+
+                        </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                        <tr class="border-b">
+
+                            <td class="p-3">John Doe</td>
+                            <td class="p-3">Web Development</td>
+                            <td class="p-3 text-green-600">Approved</td>
+
+                        </tr>
+
+                        <tr class="border-b">
+
+                            <td class="p-3">Mary Ann</td>
+                            <td class="p-3">Networking</td>
+                            <td class="p-3 text-yellow-500">Pending</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <td class="p-3">Peter</td>
+                            <td class="p-3">Database Systems</td>
+                            <td class="p-3 text-red-500">Rejected</td>
+
+                        </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="bg-white rounded-xl shadow p-6">
+
+                    <h2 class="text-xl font-semibold mb-4">
+                        Quick Actions
+                    </h2>
+
+                    <div class="space-y-4">
+
+                        <button class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700">
+                            Add Student
+                        </button>
+
+                        <button class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700">
+                            Add Course
+                        </button>
+
+                        <button class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700">
+                            Add Department
+                        </button>
+
+                        <button class="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600">
+                            Approve Registration
+                        </button>
+
+                        <button class="w-full bg-red-500 text-white py-3 rounded-lg hover:bg-red-600">
+                            Generate Report
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</div>
+
+</body>
+</html>
