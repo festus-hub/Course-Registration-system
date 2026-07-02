@@ -1,0 +1,33 @@
+{% extends 'dashboard/student_base.html' %}
+{% block title %}Available Courses{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto p-6">
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <h1 class="text-3xl font-bold">Available Courses</h1>
+            <p class="text-gray-500">Browse courses you can register for.</p>
+        </div>
+    </div>
+
+    <div class="grid gap-6 lg:grid-cols-2">
+        {% for course in courses %}
+        <div class="bg-white rounded-xl shadow p-6">
+            <h2 class="text-xl font-semibold mb-2">{{ course.code }} - {{ course.title }}</h2>
+            <p class="text-gray-500 mb-2">Department: {{ course.department.name|default:'N/A' }}</p>
+            <p class="text-gray-500 mb-2">Units: {{ course.credit_hours }}</p>
+            <p class="text-gray-600 mb-4">{{ course.description|truncatechars:120 }}</p>
+            <form method="post" action="{% url 'register_course' %}">
+                {% csrf_token %}
+                <input type="hidden" name="course_id" value="{{ course.id }}">
+                <button type="submit" class="w-full rounded-lg py-2 text-white {% if course.id in registered_course_ids %}bg-gray-400 cursor-not-allowed{% else %}bg-purple-700 hover:bg-purple-600{% endif %}" {% if course.id in registered_course_ids %}disabled{% endif %}>
+                    {% if course.id in registered_course_ids %}Already Registered{% else %}Register{% endif %}
+                </button>
+            </form>
+        </div>
+        {% empty %}
+        <div class="bg-white rounded-xl shadow p-6 text-gray-500">No active courses are available for registration.</div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

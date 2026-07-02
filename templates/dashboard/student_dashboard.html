@@ -6,10 +6,7 @@
     <title>Student Dashboard</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
 <body class="bg-gray-100">
@@ -23,29 +20,41 @@
             CourseHub
         </div>
 
-        <nav class="mt-6">
+        <nav class="mt-6 space-y-1">
 
-            <a href="#" class="flex items-center px-6 py-3 hover:bg-purple-600">
-                <i class="bi bi-house mr-3"></i> Dashboard
+            <a href="{% url 'student_dashboard' %}" class="flex items-center px-6 py-3 hover:bg-purple-600">
+                <i class="bi bi-house mr-3"></i>  Dashboard
             </a>
 
-            <a href="#" class="flex items-center px-6 py-3 hover:bg-purple-600">
-                <i class="bi bi-book mr-3"></i> My Courses
+            <a href="{% url 'student_profile_view' %}" class="flex items-center px-6 py-3 hover:bg-purple-600">
+                <i class="bi bi-person mr-3"></i> My Profile
             </a>
 
-            <a href="#" class="flex items-center px-6 py-3 hover:bg-purple-600">
-                <i class="bi bi-pencil-square mr-3"></i> Register Courses
+            <a href="{% url 'student_courses' %}" class="flex items-center px-6 py-3 hover:bg-purple-600">
+                <i class="bi bi-journal-bookmark mr-3"></i>  Available Courses
             </a>
 
-            <a href="#" class="flex items-center px-6 py-3 hover:bg-purple-600">
-                <i class="bi bi-calendar-event mr-3"></i> Timetable
+            <a href="{% url 'register_course' %}" class="flex items-center px-6 py-3 hover:bg-purple-600">
+                <i class="bi bi-pencil-square mr-3"></i>  Register Courses
             </a>
 
-            <a href="#" class="flex items-center px-6 py-3 hover:bg-purple-600">
-                <i class="bi bi-person mr-3"></i> Profile
+            <a href="{% url 'student_registrations_view' %}" class="flex items-center px-6 py-3 hover:bg-purple-600">
+                <i class="bi bi-list-check mr-3"></i>  My Registered Courses
             </a>
 
-            <a href="#" class="flex items-center px-6 py-3 hover:bg-purple-600">
+            <a href="{% url 'student_notifications' %}" class="flex items-center px-6 py-3 hover:bg-purple-600">
+                <i class="bi bi-bell mr-3"></i>  Notifications
+            </a>
+
+            <a href="{% url 'registration_slip' %}" class="flex items-center px-6 py-3 hover:bg-purple-600">
+                <i class="bi bi-file-earmark-text mr-3"></i>  Registration Slip
+            </a>
+
+            <a href="{% url 'student_settings' %}" class="flex items-center px-6 py-3 hover:bg-purple-600">
+                <i class="bi bi-gear mr-3"></i>  Settings
+            </a>
+
+            <a href="{% url 'logout' %}" class="flex items-center px-6 py-3 hover:bg-purple-600">
                 <i class="bi bi-box-arrow-right mr-3"></i> Logout
             </a>
 
@@ -71,7 +80,7 @@
 
                     
                     <span class="ml-3 font-semibold">
-                        Festus
+                        {{ student.user.username|default:'Student' }}
                     </span>
 
                 </div>
@@ -87,7 +96,7 @@
             <div class="bg-white rounded-xl shadow p-6 mb-6">
 
                 <h2 class="text-3xl font-bold">
-                    Welcome Back Festus?
+                    Welcome Back {{ student.user.username|default:'Student' }}
                 </h2>
 
                 <p class="text-gray-500">
@@ -101,7 +110,7 @@
 
                 <div class="bg-white rounded-xl shadow p-6">
                     <h3 class="text-gray-500">Registered Courses</h3>
-                    <p class="text-3xl font-bold mt-2">6</p>
+                    <p class="text-3xl font-bold mt-2">{{ registrations|length }}</p>
                 </div>
 
                 <div class="bg-white rounded-xl shadow p-6">
@@ -111,7 +120,7 @@
 
                 <div class="bg-white rounded-xl shadow p-6">
                     <h3 class="text-gray-500">Pending</h3>
-                    <p class="text-3xl font-bold mt-2 text-orange-500">2</p>
+                    <p class="text-3xl font-bold mt-2 text-orange-500">{{ pending_count }}</p>
                 </div>
 
                 <div class="bg-white rounded-xl shadow p-6">
@@ -143,38 +152,22 @@
 
                     <tbody>
 
+                        {% for registration in registrations %}
                         <tr class="border-b">
-                            <td class="p-3">DIT401</td>
-                            <td class="p-3">Python Programming</td>
-                            <td class="p-3">3</td>
+                            <td class="p-3">{{ registration.course.code }}</td>
+                            <td class="p-3">{{ registration.course.title }}</td>
+                            <td class="p-3">{{ registration.course.credit_hours }}</td>
                             <td class="p-3">
-                                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full">
-                                    Registered
+                                <span class="{% if registration.status == 'approved' %}bg-green-100 text-green-700{% elif registration.status == 'rejected' %}bg-red-100 text-red-700{% else %}bg-yellow-100 text-yellow-700{% endif %} px-3 py-1 rounded-full">
+                                    {{ registration.status|title }}
                                 </span>
                             </td>
                         </tr>
-
-                        <tr class="border-b">
-                            <td class="p-3">DIT402</td>
-                            <td class="p-3">Database Systems</td>
-                            <td class="p-3">3</td>
-                            <td class="p-3">
-                                <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full">
-                                    Pending
-                                </span>
-                            </td>
-                        </tr>
-
+                        {% empty %}
                         <tr>
-                            <td class="p-3">DIT403</td>
-                            <td class="p-3">Computer Networks</td>
-                            <td class="p-3">3</td>
-                            <td class="p-3">
-                                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full">
-                                    Registered
-                                </span>
-                            </td>
+                            <td colspan="4" class="p-3 text-gray-500">No registrations yet.</td>
                         </tr>
+                        {% endfor %}
 
                     </tbody>
 

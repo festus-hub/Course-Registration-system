@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Registrations</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-6">
+    <div class="max-w-6xl mx-auto bg-white rounded-xl shadow p-6">
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                <h1 class="text-3xl font-bold">Course Registrations</h1>
+                <p class="text-gray-500">Approve or reject student course requests.</p>
+            </div>
+            <a href="{% url 'dashboard' %}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Back to Dashboard</a>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full border-collapse">
+                <thead>
+                    <tr class="bg-gray-100 text-left">
+                        <th class="p-3">Student</th>
+                        <th class="p-3">Course</th>
+                        <th class="p-3">Status</th>
+                        <th class="p-3">Registered At</th>
+                        <th class="p-3">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for registration in registrations %}
+                    <tr class="border-b">
+                        <td class="p-3">{{ registration.student.user.username }}</td>
+                        <td class="p-3">{{ registration.course.title }}</td>
+                        <td class="p-3">
+                            <span class="{% if registration.status == 'approved' %}text-green-600{% elif registration.status == 'rejected' %}text-red-600{% else %}text-yellow-600{% endif %}">
+                                {{ registration.status|title }}
+                            </span>
+                        </td>
+                        <td class="p-3">{{ registration.registered_at }}</td>
+                        <td class="p-3">
+                            <a href="{% url 'update_registration_status' registration.pk %}" class="text-blue-600 hover:underline">Update</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="p-3 text-gray-500">No registrations found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

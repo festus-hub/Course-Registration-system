@@ -1,0 +1,35 @@
+<aside class="w-64 bg-purple-700 text-white">
+    <div class="p-6 text-2xl font-bold border-b border-purple-500">
+        CourseHub
+    </div>
+
+    <nav class="mt-6 space-y-1">
+        <a href="{% url 'student_dashboard' %}" class="flex items-center px-6 py-3 hover:bg-purple-600">
+            <i class="bi bi-house mr-3"></i> Dashboard
+        </a>
+        <a href="{% url 'student_profile_view' %}" class="flex items-center px-6 py-3 hover:bg-purple-600">
+            <i class="bi bi-person mr-3"></i> My Profile
+        </a>
+        <a href="{% url 'student_courses' %}" class="flex items-center px-6 py-3 hover:bg-purple-600">
+            <i class="bi bi-journal-bookmark mr-3"></i> Available Courses
+        </a>
+        <a href="{% url 'register_course' %}" class="flex items-center px-6 py-3 hover:bg-purple-600">
+            <i class="bi bi-pencil-square mr-3"></i> Register Courses
+        </a>
+        <a href="{% url 'student_registrations_view' %}" class="flex items-center px-6 py-3 hover:bg-purple-600">
+            <i class="bi bi-list-check mr-3"></i> My Registered Courses
+        </a>
+        <a href="{% url 'student_notifications' %}" class="flex items-center px-6 py-3 hover:bg-purple-600">
+            <i class="bi bi-bell mr-3"></i> Notifications
+        </a>
+        <a href="{% url 'registration_slip' %}" class="flex items-center px-6 py-3 hover:bg-purple-600">
+            <i class="bi bi-file-earmark-text mr-3"></i> Registration Slip
+        </a>
+        <a href="{% url 'student_settings' %}" class="flex items-center px-6 py-3 hover:bg-purple-600">
+            <i class="bi bi-gear mr-3"></i> Settings
+        </a>
+        <a href="{% url 'logout' %}" class="flex items-center px-6 py-3 hover:bg-purple-600">
+            <i class="bi bi-box-arrow-right mr-3"></i> Logout
+        </a>
+    </nav>
+</aside>

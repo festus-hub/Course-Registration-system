@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Student Dashboard{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto p-6">
+    <div class="mb-6">
+        <h1 class="text-3xl font-bold">Welcome Back {{ student.user.username|default:'Student' }}</h1>
+        <p class="text-gray-500">Manage your class registration from one place.</p>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-3 mb-6">
+        <div class="bg-white rounded-xl shadow p-6">
+            <h2 class="text-gray-500">Registered Courses</h2>
+            <p class="text-3xl font-bold mt-2">{{ registrations|length }}</p>
+        </div>
+        <div class="bg-white rounded-xl shadow p-6">
+            <h2 class="text-gray-500">Pending Approval</h2>
+            <p class="text-3xl font-bold mt-2 text-orange-500">{{ pending_count }}</p>
+        </div>
+        <div class="bg-white rounded-xl shadow p-6">
+            <h2 class="text-gray-500">Department</h2>
+            <p class="text-3xl font-bold mt-2">{{ student.department.name|default:'N/A' }}</p>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">Recent Registrations</h2>
+        <table class="w-full text-left border-collapse">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="p-3">Code</th>
+                    <th class="p-3">Course</th>
+                    <th class="p-3">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for registration in registrations %}
+                <tr class="border-t">
+                    <td class="p-3">{{ registration.course.code }}</td>
+                    <td class="p-3">{{ registration.course.title }}</td>
+                    <td class="p-3">
+                        <span class="px-3 py-1 rounded-full {% if registration.status == 'approved' %}bg-green-100 text-green-700{% elif registration.status == 'rejected' %}bg-red-100 text-red-700{% else %}bg-yellow-100 text-yellow-700{% endif %}">
+                            {{ registration.status|title }}
+                        </span>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="p-3 text-gray-500">No registrations yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

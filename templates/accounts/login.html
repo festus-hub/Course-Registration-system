@@ -66,7 +66,9 @@
             Welcome back! Please enter your details to continue.
         </p>
 
-        <form>
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{% url 'dashboard' %}">
 
             <!-- Email -->
 
@@ -81,8 +83,9 @@
                     <i class="fa-regular fa-envelope absolute left-4 top-4 text-gray-400"></i>
 
                     <input
-                        type="email"
-                        placeholder="Enter your email"
+                        type="text"
+                        placeholder="Enter your username"
+                        name="username"
                         class="w-full border rounded-lg py-3 pl-11 pr-4 outline-none focus:ring-2 focus:ring-purple-500">
 
                 </div>
@@ -104,6 +107,7 @@
                     <input
                         id="password"
                         type="password"
+                        name="password"
                         placeholder="Enter your password"
                         class="w-full border rounded-lg py-3 pl-11 pr-11 outline-none focus:ring-2 focus:ring-purple-500">
 
@@ -129,7 +133,7 @@
 
                 </label>
 
-                <a href="#" class="text-purple-600 text-sm hover:underline">
+                <a href="{% url 'password_reset' %}" class="text-purple-600 text-sm hover:underline">
                     Forgot password?
                 </a>
 
@@ -143,37 +147,9 @@
 
         </form>
 
-        <!-- Divider -->
+       
 
-        <div class="flex items-center my-8">
-
-            <hr class="flex-1">
-
-            <span class="mx-4 text-gray-400 text-sm">
-                or continue with
-            </span>
-
-            <hr class="flex-1">
-
-        </div>
-
-        <!-- Social -->
-
-        <div class="grid grid-cols-3 gap-4">
-
-            <button title="Continue with Google" class="border rounded-lg py-3 hover:bg-gray-50">
-                <i class="fab fa-google text-red-500 text-xl"></i>
-            </button>
-
-            <button title="Continue with Facebook" class="border rounded-lg py-3 hover:bg-gray-50">
-                <i class="fab fa-facebook text-blue-600 text-xl"></i>
-            </button>
-
-            <button title="Continue with Apple" class="border rounded-lg py-3 hover:bg-gray-50">
-                <i class="fab fa-apple text-black text-xl"></i>
-            </button>
-
-        </div>
+     
 
         <!-- Register -->
 

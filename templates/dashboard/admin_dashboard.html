@@ -22,14 +22,10 @@
 
         <nav class="mt-6">
 
-            <a href="#" class="block px-6 py-3 bg-blue-700"> Dashboard</a>
-            <a href="#" class="block px-6 py-3 hover:bg-blue-700"> Students</a>
-            <a href="#" class="block px-6 py-3 hover:bg-blue-700"> Courses</a>
-            <a href="#" class="block px-6 py-3 hover:bg-blue-700"> Departments</a>
-            <a href="#" class="block px-6 py-3 hover:bg-blue-700"> Registrations</a>
-            <a href="#" class="block px-6 py-3 hover:bg-blue-700"> Accounts</a>
-            <a href="#" class="block px-6 py-3 hover:bg-blue-700"> Reports</a>
-            <a href="#" class="block px-6 py-3 hover:bg-blue-700"> Settings</a>
+            <a href="{% url 'admin_dashboard' %}" class="block px-6 py-3 bg-blue-700"> Dashboard</a>
+            <a href="/admin/" class="block px-6 py-3 hover:bg-blue-700"> Admin Panel</a>
+            <a href="{% url 'registration_list' %}" class="block px-6 py-3 hover:bg-blue-700"> Registrations</a>
+            <a href="{% url 'logout' %}" class="block px-6 py-3 hover:bg-blue-700"> Logout</a>
 
         </nav>
 
@@ -62,22 +58,22 @@
 
                 <div class="bg-white rounded-xl shadow p-6">
                     <h3 class="text-gray-500">Students</h3>
-                    <p class="text-4xl font-bold mt-2">1,250</p>
+                    <p class="text-4xl font-bold mt-2">{{ total_students }}</p>
                 </div>
 
                 <div class="bg-white rounded-xl shadow p-6">
                     <h3 class="text-gray-500">Courses</h3>
-                    <p class="text-4xl font-bold mt-2">45</p>
+                    <p class="text-4xl font-bold mt-2">{{ total_courses }}</p>
                 </div>
 
                 <div class="bg-white rounded-xl shadow p-6">
                     <h3 class="text-gray-500">Departments</h3>
-                    <p class="text-4xl font-bold mt-2">8</p>
+                    <p class="text-4xl font-bold mt-2">{{ total_departments }}</p>
                 </div>
 
                 <div class="bg-white rounded-xl shadow p-6">
                     <h3 class="text-gray-500">Registrations</h3>
-                    <p class="text-4xl font-bold mt-2">890</p>
+                    <p class="text-4xl font-bold mt-2">{{ pending_registrations }}</p>
                 </div>
 
             </div>
@@ -108,29 +104,17 @@
 
                         <tbody>
 
+                        {% for registration in registrations %}
                         <tr class="border-b">
-
-                            <td class="p-3">John Doe</td>
-                            <td class="p-3">Web Development</td>
-                            <td class="p-3 text-green-600">Approved</td>
-
+                            <td class="p-3">{{ registration.student.user.username }}</td>
+                            <td class="p-3">{{ registration.course.title }}</td>
+                            <td class="p-3 {% if registration.status == 'approved' %}text-green-600{% elif registration.status == 'rejected' %}text-red-500{% else %}text-yellow-500{% endif %}">{{ registration.status|title }}</td>
                         </tr>
-
-                        <tr class="border-b">
-
-                            <td class="p-3">Mary Ann</td>
-                            <td class="p-3">Networking</td>
-                            <td class="p-3 text-yellow-500">Pending</td>
-
-                        </tr>
-
+                        {% empty %}
                         <tr>
-
-                            <td class="p-3">Peter</td>
-                            <td class="p-3">Database Systems</td>
-                            <td class="p-3 text-red-500">Rejected</td>
-
+                            <td colspan="3" class="p-3 text-gray-500">No registrations yet.</td>
                         </tr>
+                        {% endfor %}
 
                         </tbody>
 
