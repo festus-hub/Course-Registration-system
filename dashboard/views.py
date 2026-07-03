@@ -106,7 +106,7 @@ def registration_slip(request):
     student = get_student(request)
     registrations = CourseRegistration.objects.filter(student=student).select_related('course')
     total_units = sum(reg.course.credit_hours for reg in registrations)
-    return render(request, "dashboard/registration_slip.html", {
+    return render(request, "registrations/registration_slip.html", {
         'student': student,
         'registrations': registrations,
         'total_units': total_units,

@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.views.decorators.csrf import csrf_protect
 
 from .models import CustomUser
+from students.models import Student
 
 
 class CustomUserCreationForm(forms.ModelForm):
@@ -13,7 +14,7 @@ class CustomUserCreationForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ('username', 'email')
+        fields = ('username', 'email', 'role')
 
     def clean_password2(self):
         password1 = self.cleaned_data.get('password1')
@@ -25,6 +26,8 @@ class CustomUserCreationForm(forms.ModelForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data['password1'])
+        if self.cleaned_data.get('role') == 'admin':
+            user.is_staff = True
         if commit:
             user.save()
         return user
@@ -50,7 +53,12 @@ def register_view(request):
         form = CustomUserCreationForm(request.POST)
 
         if form.is_valid():
-            form.save()
+            user = form.save()
+            if form.cleaned_data.get('role') == 'student':
+                Student.objects.create(
+                    user=user,
+                    student_id=f'STU-{user.id:04d}',
+                )
             messages.success(request, "Account created successfully!")
             return redirect('login')
     else:
