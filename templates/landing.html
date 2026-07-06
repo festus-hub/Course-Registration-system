@@ -81,12 +81,13 @@ for a Better Future
 </p>
 
         <div class="mt-8 flex gap-4">
+            <a href=""></a>
 
-        <button class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700">
-
-            Browse Courses
-                    <span class="bi-arrow-right"></span>
-        </button>
+       <a href="{% url 'course_list' %}"
+   class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 inline-flex items-center">
+    Browse Courses
+    <i class="bi bi-arrow-right ms-2"></i>
+</a>
 
    <a href="{% url 'register' %}"
                     class="bg-white text-blue-500 px-8 py-3 rounded-lg hover:bg-purple-500">
@@ -202,7 +203,7 @@ Simple and secure course registration.
 </div>
 
 <h3 class="font-bold text-xl text-center mt-5">
-
+    
 Browse Courses
 
 </h3>

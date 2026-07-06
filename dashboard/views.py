@@ -6,6 +6,7 @@ from courses.models import Course
 from departments.models import Department
 from registrations.models import CourseRegistration
 from students.models import Student
+from .models import Announcement
 
 
 def get_student(request):
@@ -92,9 +93,10 @@ def student_registrations(request):
 
 @login_required
 def student_notifications(request):
+    announcements = Announcement.objects.filter(is_active=True).order_by('-created_at')
     notifications = [
-        {"title": "Registration Window Open", "message": "You can now register courses for the upcoming semester."},
-        {"title": "Status Update", "message": "One or more of your course registrations has been approved."},
+        {'title': announcement.title, 'message': announcement.content}
+        for announcement in announcements
     ]
     return render(request, "dashboard/notifications.html", {
         'notifications': notifications,

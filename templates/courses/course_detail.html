@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ course.title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto p-6">
+    <div class="bg-white rounded-xl shadow p-8">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+            <div>
+                <p class="text-sm font-semibold uppercase tracking-wide text-purple-700">{{ course.code }}</p>
+                <h1 class="text-3xl font-bold">{{ course.title }}</h1>
+            </div>
+            <div class="text-sm text-gray-500">{{ course.credit_hours }} units · {{ course.semester|default:'General' }}</div>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-[2fr_1fr]">
+            <div>
+                <h2 class="text-xl font-semibold mb-3">Course Overview</h2>
+                <p class="text-gray-700 leading-7">{{ course.description|default:'No detailed description is available for this course yet.' }}</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-5">
+                <h3 class="font-semibold mb-3">Quick Info</h3>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li><span class="font-medium text-gray-800">Department:</span> {{ course.department.name|default:'Not assigned' }}</li>
+                    <li><span class="font-medium text-gray-800">Semester:</span> {{ course.semester|default:'Not specified' }}</li>
+                    <li><span class="font-medium text-gray-800">Status:</span> {% if course.is_active %}Active{% else %}Inactive{% endif %}</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+            <a href="{% url 'course_list' %}" class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200">Back to Courses</a>
+            {% if user.is_authenticated and not user.is_staff %}
+                <a href="{% url 'register_courses' %}" class="bg-purple-700 text-white px-4 py-2 rounded-lg hover:bg-purple-600">Register for This Course</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'dashboard/student_base.html' %}
+{% block title %}Register Courses{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto p-6">
+    <div class="mb-6">
+        <h1 class="text-3xl font-bold">Register Courses</h1>
+        <p class="text-gray-500">Select courses below to add them to your registration list.</p>
+    </div>
+
+    {% if messages %}
+    <div class="space-y-2 mb-6">
+        {% for message in messages %}
+            <div class="p-4 rounded-lg {% if message.tags == 'success' %}bg-green-100 text-green-700{% elif message.tags == 'error' %}bg-red-100 text-red-700{% else %}bg-gray-100 text-gray-700{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="grid gap-6 lg:grid-cols-2">
+        {% for course in courses %}
+        <div class="bg-white rounded-xl shadow p-6">
+            <h2 class="text-xl font-semibold mb-2">{{ course.code }} - {{ course.title }}</h2>
+            <p class="text-gray-500 mb-3">{{ course.department.name|default:'N/A' }} • {{ course.credit_hours }} units</p>
+            <p class="text-gray-600 mb-4">{{ course.description|truncatechars:120 }}</p>
+            <form method="post" action="{% url 'register_courses' %}">
+                {% csrf_token %}
+                <input type="hidden" name="course_id" value="{{ course.id }}">
+                <button type="submit" class="w-full rounded-lg py-2 text-white {% if course.id in registered_course_ids %}bg-gray-400 cursor-not-allowed{% else %}bg-purple-700 hover:bg-purple-600{% endif %}" {% if course.id in registered_course_ids %}disabled{% endif %}>
+                    {% if course.id in registered_course_ids %}Already Registered{% else %}Register{% endif %}
+                </button>
+            </form>
+        </div>
+        {% empty %}
+        <div class="bg-white rounded-xl shadow p-6 text-gray-500">No active courses are available for registration.</div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
