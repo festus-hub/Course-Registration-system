@@ -6,72 +6,126 @@
     <title>Admin Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
 
 <body class="bg-gray-100">
 
-<div class="flex min-h-screen">
+<div class="flex min-h-screen" x-data="{ sidebarOpen: false }">
+
+    <!-- Mobile overlay -->
+    <div x-show="sidebarOpen"
+         x-cloak
+         @click="sidebarOpen = false"
+         class="fixed inset-0 bg-black/40 z-40 md:hidden"></div>
 
     <!-- Sidebar -->
-    <aside class="w-64 bg-blue-900 text-white hidden md:block">
+    <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+           class="fixed md:static md:translate-x-0 z-50 w-64 bg-blue-900 text-white min-h-screen
+                  transition-transform duration-200 ease-out">
 
-        <div class="p-6 text-2xl font-bold border-b border-blue-700">
-            CRS Admin
+        <div class="p-6 flex items-center justify-between border-b border-blue-800">
+            <span class="text-2xl font-bold">CRS Admin</span>
+            <button @click="sidebarOpen = false" class="md:hidden text-white/80 hover:text-white">
+                <i class="bi bi-x-lg text-xl"></i>
+            </button>
         </div>
 
-        <nav class="mt-6">
+        <nav class="mt-6 space-y-1">
 
-            <a href="{% url 'admin_dashboard' %}" class="block px-6 py-3 bg-blue-700"> Dashboard</a>
-            <a href="/admin/" class="block px-6 py-3 hover:bg-blue-700"> Admin Panel</a>
-            <a href="{% url 'registration_list' %}" class="block px-6 py-3 hover:bg-blue-700"> Registrations</a>
-            <a href="{% url 'logout' %}" class="block px-6 py-3 hover:bg-blue-700"> Logout</a>
+            <a href="{% url 'admin_dashboard' %}"
+               class="flex items-center gap-3 px-6 py-3 bg-blue-800 border-l-4 border-white transition-colors duration-150">
+                <i class="bi bi-speedometer2"></i> Dashboard
+            </a>
+
+            <a href="/admin/"
+               class="flex items-center gap-3 px-6 py-3 border-l-4 border-transparent hover:bg-blue-800 transition-colors duration-150">
+                <i class="bi bi-gear"></i> Admin Panel
+            </a>
+
+            <a href="{% url 'registration_list' %}"
+               class="flex items-center gap-3 px-6 py-3 border-l-4 border-transparent hover:bg-blue-800 transition-colors duration-150">
+                <i class="bi bi-clipboard-check"></i> Registrations
+            </a>
+
+            <a href="{% url 'logout' %}"
+               class="flex items-center gap-3 px-6 py-3 border-l-4 border-transparent hover:bg-blue-800 transition-colors duration-150">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
 
         </nav>
 
     </aside>
 
     <!-- Main Content -->
-    <div class="flex-1">
+    <div class="flex-1 min-w-0">
 
         <!-- Navbar -->
-        <header class="bg-white shadow px-6 py-4 flex justify-between items-center">
+        <header class="bg-white shadow px-4 md:px-6 py-4 flex justify-between items-center gap-4">
 
-            <h1 class="text-2xl font-bold">
-                Dashboard
-            </h1>
+            <div class="flex items-center gap-3">
+                <button @click="sidebarOpen = true" class="md:hidden text-gray-600 hover:text-gray-900">
+                    <i class="bi bi-list text-2xl"></i>
+                </button>
+                <h1 class="text-xl md:text-2xl font-bold">Dashboard</h1>
+            </div>
 
             <div class="flex items-center gap-4">
-
-                <input class="border rounded-lg px-4 py-2 bi bi-search" type="text" placeholder="Search">
-                   
+                <div class="relative hidden sm:block">
+                    <i class="bi bi-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" placeholder="Search"
+                           class="border border-gray-300 rounded-lg pl-9 pr-4 py-2 text-sm
+                                  focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-150">
+                </div>
+                <i class="bi bi-person-circle text-3xl text-gray-400"></i>
+            </div>
 
         </header>
 
         <!-- Content -->
-        <main class="p-6">
+        <main class="p-4 md:p-6">
 
             <!-- Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
-                <div class="bg-white rounded-xl shadow p-6">
-                    <h3 class="text-gray-500">Students</h3>
-                    <p class="text-4xl font-bold mt-2">{{ total_students }}</p>
+                <div class="bg-white rounded-xl shadow p-6 flex items-center justify-between">
+                    <div>
+                        <h3 class="text-gray-500 text-sm">Students</h3>
+                        <p class="text-3xl font-bold mt-1">{{ total_students }}</p>
+                    </div>
+                    <div class="bg-blue-100 text-blue-600 p-3 rounded-full">
+                        <i class="bi bi-people-fill text-xl"></i>
+                    </div>
                 </div>
 
-                <div class="bg-white rounded-xl shadow p-6">
-                    <h3 class="text-gray-500">Courses</h3>
-                    <p class="text-4xl font-bold mt-2">{{ total_courses }}</p>
+                <div class="bg-white rounded-xl shadow p-6 flex items-center justify-between">
+                    <div>
+                        <h3 class="text-gray-500 text-sm">Courses</h3>
+                        <p class="text-3xl font-bold mt-1">{{ total_courses }}</p>
+                    </div>
+                    <div class="bg-blue-100 text-blue-600 p-3 rounded-full">
+                        <i class="bi bi-journal-bookmark-fill text-xl"></i>
+                    </div>
                 </div>
 
-                <div class="bg-white rounded-xl shadow p-6">
-                    <h3 class="text-gray-500">Departments</h3>
-                    <p class="text-4xl font-bold mt-2">{{ total_departments }}</p>
+                <div class="bg-white rounded-xl shadow p-6 flex items-center justify-between">
+                    <div>
+                        <h3 class="text-gray-500 text-sm">Departments</h3>
+                        <p class="text-3xl font-bold mt-1">{{ total_departments }}</p>
+                    </div>
+                    <div class="bg-blue-100 text-blue-600 p-3 rounded-full">
+                        <i class="bi bi-diagram-3-fill text-xl"></i>
+                    </div>
                 </div>
 
-                <div class="bg-white rounded-xl shadow p-6">
-                    <h3 class="text-gray-500">Registrations</h3>
-                    <p class="text-4xl font-bold mt-2">{{ pending_registrations }}</p>
+                <div class="bg-white rounded-xl shadow p-6 flex items-center justify-between">
+                    <div>
+                        <h3 class="text-gray-500 text-sm">Pending registrations</h3>
+                        <p class="text-3xl font-bold mt-1">{{ pending_registrations }}</p>
+                    </div>
+                    <div class="bg-yellow-100 text-yellow-600 p-3 rounded-full">
+                        <i class="bi bi-hourglass-split text-xl"></i>
+                    </div>
                 </div>
 
             </div>
@@ -80,40 +134,39 @@
             <div class="grid lg:grid-cols-3 gap-6 mt-8">
 
                 <!-- Table -->
-                <div class="lg:col-span-2 bg-white rounded-xl shadow p-6">
+                <div class="lg:col-span-2 bg-white rounded-xl shadow p-6 overflow-x-auto">
 
-                    <h2 class="text-xl font-semibold mb-4">
-                        Recent Registrations
-                    </h2>
+                    <h2 class="text-xl font-semibold mb-4">Recent Registrations</h2>
 
-                    <table class="w-full">
+                    <table class="w-full text-sm">
 
-                        <thead class="bg-gray-100">
-
+                        <thead class="bg-gray-100 text-gray-600">
                         <tr>
-
-                            <th class="text-left p-3">Student</th>
-                            <th class="text-left p-3">Course</th>
-                            <th class="text-left p-3">Status</th>
-
+                            <th class="text-left p-3 font-medium">Student</th>
+                            <th class="text-left p-3 font-medium">Course</th>
+                            <th class="text-left p-3 font-medium">Status</th>
                         </tr>
-
                         </thead>
 
                         <tbody>
-
                         {% for registration in registrations %}
-                        <tr class="border-b">
+                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors duration-150">
                             <td class="p-3">{{ registration.student.user.username }}</td>
                             <td class="p-3">{{ registration.course.title }}</td>
-                            <td class="p-3 {% if registration.status == 'approved' %}text-green-600{% elif registration.status == 'rejected' %}text-red-500{% else %}text-yellow-500{% endif %}">{{ registration.status|title }}</td>
+                            <td class="p-3">
+                                <span class="px-2.5 py-0.5 rounded-full text-xs font-medium
+                                    {% if registration.status == 'approved' %}bg-emerald-100 text-emerald-700
+                                    {% elif registration.status == 'rejected' %}bg-red-100 text-red-700
+                                    {% else %}bg-yellow-100 text-yellow-700{% endif %}">
+                                    {{ registration.status|title }}
+                                </span>
+                            </td>
                         </tr>
                         {% empty %}
                         <tr>
                             <td colspan="3" class="p-3 text-gray-500">No registrations yet.</td>
                         </tr>
                         {% endfor %}
-
                         </tbody>
 
                     </table>
@@ -123,34 +176,44 @@
                 <!-- Quick Actions -->
                 <div class="bg-white rounded-xl shadow p-6">
 
-                    <h2 class="text-xl font-semibold mb-4">
-                        Quick Actions
-                    </h2>
+                    <h2 class="text-xl font-semibold mb-4">Quick Actions</h2>
 
-                    <div class="space-y-4">
+                    <div class="space-y-3">
 
-                        <a href="/admin/students/student/add/" class="block text-center w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700">
-                            Add Student
+                        <a href="/admin/students/student/add/"
+                           class="flex items-center justify-center gap-2 w-full bg-blue-600 text-white py-3 rounded-lg
+                                  hover:bg-blue-700 transition-colors duration-150">
+                            <i class="bi bi-person-plus"></i> Add Student
                         </a>
 
-                        <a href="/admin/courses/course/add/" class="block text-center w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700">
-                            Add Course
+                        <a href="/admin/courses/course/add/"
+                           class="flex items-center justify-center gap-2 w-full bg-blue-600 text-white py-3 rounded-lg
+                                  hover:bg-blue-700 transition-colors duration-150">
+                            <i class="bi bi-journal-plus"></i> Add Course
                         </a>
 
-                        <a href="{% url 'course_list' %}" class="block text-center w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700">
-                            View Course Catalog
+                        <a href="{% url 'course_list' %}"
+                           class="flex items-center justify-center gap-2 w-full bg-gray-100 text-gray-700 py-3 rounded-lg
+                                  hover:bg-gray-200 transition-colors duration-150">
+                            <i class="bi bi-collection"></i> View Course Catalog
                         </a>
 
-                        <a href="/admin/departments/department/add/" class="block text-center w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700">
-                            Add Department
+                        <a href="/admin/departments/department/add/"
+                           class="flex items-center justify-center gap-2 w-full bg-gray-100 text-gray-700 py-3 rounded-lg
+                                  hover:bg-gray-200 transition-colors duration-150">
+                            <i class="bi bi-building-add"></i> Add Department
                         </a>
 
-                        <a href="{% url 'registration_list' %}" class="block text-center w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600">
-                            Approve Registration
+                        <a href="{% url 'registration_list' %}"
+                           class="flex items-center justify-center gap-2 w-full bg-emerald-600 text-white py-3 rounded-lg
+                                  hover:bg-emerald-700 transition-colors duration-150">
+                            <i class="bi bi-check2-circle"></i> Approve Registration
                         </a>
 
-                        <a href="/admin/" class="block text-center w-full bg-red-500 text-white py-3 rounded-lg hover:bg-red-600">
-                            Generate Report
+                        <a href="/admin/"
+                           class="flex items-center justify-center gap-2 w-full bg-red-600 text-white py-3 rounded-lg
+                                  hover:bg-red-700 transition-colors duration-150">
+                            <i class="bi bi-file-earmark-bar-graph"></i> Generate Report
                         </a>
 
                     </div>
