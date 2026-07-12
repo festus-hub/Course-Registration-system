@@ -7,82 +7,144 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Sora', 'sans-serif'],
+                    },
+                    colors: {
+                        violet: {
+                            900: '#2E1065',
+                            800: '#3E1A78',
+                            700: '#4C1D95',
+                            500: '#7C3AED',
+                            100: '#EDE7FB',
+                        },
+                        ink: '#1E1B2E',
+                        inksoft: '#5B5670',
+                        muted: '#8B8699',
+                        lime: '#B7F04C',
+                    },
+                    boxShadow: {
+                        card: '0 1px 2px rgba(46,16,101,0.04), 0 8px 24px -12px rgba(46,16,101,0.12)',
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-display { font-family: 'Sora', sans-serif; }
+    </style>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-[#F3F1FA] text-ink antialiased">
 
 <div class="flex min-h-screen">
 
-    <!-- Sidebar -->
-    <aside class="w-64 bg-purple-700 text-white">
+    <!-- Mobile overlay (click to close sidebar) -->
+    <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/40 z-30 hidden lg:hidden"></div>
 
-        <div class="p-6 text-2xl font-bold border-b border-purple-500">
-            CourseHub
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-40 w-64 -translate-x-full lg:translate-x-0 transition-transform duration-200 ease-in-out bg-gradient-to-b from-violet-900 to-violet-700 text-white flex flex-col relative overflow-hidden">
+
+        <div class="absolute -top-20 -right-20 w-56 h-56 rounded-full bg-lime/20 blur-3xl pointer-events-none"></div>
+
+        <div class="flex items-center justify-between p-6 border-b border-white/10 relative">
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-[10px] bg-lime flex items-center justify-center font-display font-extrabold text-violet-900 text-base">C</div>
+                <span class="font-display text-xl font-bold tracking-tight">CourseHub</span>
+            </div>
+            <button onclick="toggleSidebar()" class="lg:hidden text-white/80 hover:text-white text-xl">
+                <i class="bi bi-x-lg"></i>
+            </button>
         </div>
 
-        <nav class="mt-6 space-y-1">
+        <nav class="mt-4 space-y-1 px-3 relative flex-1">
 
-            <a href="{% url 'student_dashboard' %}" class="flex items-center px-6 py-3 hover:bg-green-600">
-                <i class="bi bi-house mr-3"></i>  Dashboard
+            <a href="{% url 'student_dashboard' %}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[14.5px] font-medium bg-white/[0.13] text-white hover:bg-white/[0.07] hover:text-white transition-colors">
+                <i class="bi bi-house text-base w-5 text-center"></i> Dashboard
             </a>
 
-            <a href="{% url 'student_profile_view' %}" class="flex items-center px-6 py-3 hover:bg-green-600">
-                <i class="bi bi-person mr-3"></i> My Profile
+            <a href="{% url 'student_profile_view' %}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[14.5px] font-medium text-white/70 hover:bg-white/[0.07] hover:text-white transition-colors">
+                <i class="bi bi-person text-base w-5 text-center"></i> My Profile
             </a>
 
-            <a href="{% url 'student_courses' %}" class="flex items-center px-6 py-3 hover:bg-green-600">
-                <i class="bi bi-journal-bookmark mr-3"></i>  Available Courses
+            <a href="{% url 'student_courses' %}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[14.5px] font-medium text-white/70 hover:bg-white/[0.07] hover:text-white transition-colors">
+                <i class="bi bi-journal-bookmark text-base w-5 text-center"></i> Available Courses
             </a>
 
-            <a href="{% url 'register_course' %}" class="flex items-center px-6 py-3 hover:bg-green-600">
-                <i class="bi bi-pencil-square mr-3"></i>  Register Courses
+            <a href="{% url 'register_course' %}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[14.5px] font-medium text-white/70 hover:bg-white/[0.07] hover:text-white transition-colors">
+                <i class="bi bi-pencil-square text-base w-5 text-center"></i> Register Courses
             </a>
 
-            <a href="{% url 'student_registrations_view' %}" class="flex items-center px-6 py-3 hover:bg-green-600">
-                <i class="bi bi-list-check mr-3"></i>  My Registered Courses
+            <a href="{% url 'student_registrations_view' %}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[14.5px] font-medium text-white/70 hover:bg-white/[0.07] hover:text-white transition-colors">
+                <i class="bi bi-list-check text-base w-5 text-center"></i> My Registered Courses
             </a>
 
-            <a href="{% url 'student_notifications' %}" class="flex items-center px-6 py-3 hover:bg-green-600">
-                <i class="bi bi-bell mr-3"></i>  Notifications
+            <div class="h-px bg-white/10 my-3 mx-1"></div>
+
+            <a href="{% url 'student_notifications' %}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[14.5px] font-medium text-white/70 hover:bg-white/[0.07] hover:text-white transition-colors">
+                <i class="bi bi-bell text-base w-5 text-center"></i> Notifications
             </a>
 
-            <a href="{% url 'registration_slip' %}" class="flex items-center px-6 py-3 hover:bg-green-600">
-                <i class="bi bi-file-earmark-text mr-3"></i>  Registration Slip
-            </a>
-
-            <a href="{% url 'student_settings' %}" class="flex items-center px-6 py-3 hover:bg-green-600">
-                <i class="bi bi-gear mr-3"></i>  Settings
-            </a>
-
-            <a href="{% url 'logout' %}" class="flex items-center px-6 py-3 hover:bg-green-600">
-                <i class="bi bi-box-arrow-right mr-3"></i> Logout
+            <a href="{% url 'registration_slip' %}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[14.5px] font-medium text-white/70 hover:bg-white/[0.07] hover:text-white transition-colors">
+                <i class="bi bi-file-earmark-text text-base w-5 text-center"></i> Registration Slip
             </a>
 
         </nav>
 
+        <div class="px-3 pb-5 space-y-1 relative">
+            <a href="{% url 'student_settings' %}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[14.5px] font-medium text-white/70 hover:bg-white/[0.07] hover:text-white transition-colors">
+                <i class="bi bi-gear text-base w-5 text-center"></i> Settings
+            </a>
+            <a href="{% url 'logout' %}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[14.5px] font-medium text-white/70 hover:bg-white/[0.07] hover:text-white transition-colors">
+                <i class="bi bi-box-arrow-right text-base w-5 text-center"></i> Logout
+            </a>
+        </div>
+
     </aside>
 
     <!-- Main Content -->
-    <main class="flex-1">
+    <main class="flex-1 min-w-0">
 
         <!-- Navbar -->
-        <header class="bg-white shadow px-8 py-4 flex justify-between items-center">
+        <header class="bg-white shadow-card px-4 sm:px-8 py-4 flex justify-between items-center sticky top-0 z-20">
 
-            <h1 class="text-2xl font-bold">
-                Student Dashboard
-            </h1>
+            <div class="flex items-center gap-3">
 
-            <div class="flex items-center space-x-5">
+                <button onclick="toggleSidebar()" class="lg:hidden text-inksoft hover:text-violet-700 text-xl">
+                    <i class="bi bi-list"></i>
+                </button>
+                <h1 class="font-display text-lg sm:text-2xl font-bold">
+                    Student Dashboard
+                </h1>
+            </div>
 
-                <i class="bi bi-bell text-2xl"></i>
+            <div class="flex items-center gap-4 sm:gap-5">
 
-                <div class="flex items-center">
+                <button class="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-violet-100/60 flex items-center justify-center text-inksoft hover:text-violet-700">
+                    <i class="bi bi-bell text-lg"></i>
+                    {% if pending_count %}
+                    <span class="absolute top-1.5 right-1.5 w-[7px] h-[7px] rounded-full bg-red-600 border-[1.5px] border-white"></span>
+                    {% endif %}
+                </button>
 
-                    
-                    <span class="ml-3 font-semibold">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-full bg-gradient-to-br from-violet-500 to-violet-900 text-white flex items-center justify-center font-display font-bold text-sm shrink-0">
+                        {{ student.user.username|default:'S'|first|upper }}
+                    </div>
+                    <span class="hidden sm:inline font-semibold text-sm">
                         {{ student.user.username|default:'Student' }}
                     </span>
-
                 </div>
 
             </div>
@@ -90,95 +152,129 @@
         </header>
 
         <!-- Dashboard -->
-        <div class="p-8">
+        <div class="p-4 sm:p-8">
 
             <!-- Welcome -->
-            <div class="bg-white rounded-xl shadow p-6 mb-6">
+            <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-violet-800 to-violet-500 text-white p-6 sm:p-8 mb-6">
+                <div class="absolute -right-10 -bottom-16 w-64 h-64 rounded-full bg-lime/25 blur-3xl pointer-events-none"></div>
 
-                <h2 class="text-3xl font-bold">
-                    Welcome Back {{ student.user.username|default:'Student' }}
+                <h2 class="relative font-display text-xl sm:text-3xl font-bold tracking-tight">
+                    Welcome back, {{ student.user.username|default:'Student' }}
                 </h2>
 
-                <p class="text-gray-500">
-                    Manage your courses and academic progress.
+                <p class="relative text-white/80 text-sm sm:text-base mt-1.5">
+                    Manage your courses and track your academic progress.
                 </p>
-
             </div>
 
             <!-- Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 mb-6">
 
-                <div class="bg-white rounded-xl shadow p-6">
-                    <h3 class="text-gray-500">Registered Courses</h3>
-                    <p class="text-3xl font-bold mt-2">{{ registrations|length }}</p>
+                <div class="bg-white rounded-2xl shadow-card p-4 sm:p-5">
+                    <div class="flex items-center justify-between mb-2 sm:mb-3">
+                        <h3 class="text-[11px] sm:text-xs font-semibold uppercase tracking-wide text-muted">Registered</h3>
+                        <div class="w-8 h-8 rounded-lg bg-violet-100 text-violet-700 flex items-center justify-center shrink-0">
+                            <i class="bi bi-journal-bookmark text-sm"></i>
+                        </div>
+                    </div>
+                    <p class="font-display text-2xl sm:text-3xl font-bold">{{ registrations|length }}</p>
+                    <span class="text-xs text-muted">courses this term</span>
                 </div>
 
-                <div class="bg-white rounded-xl shadow p-6">
-                    <h3 class="text-gray-500">Credit Hours</h3>
-                    <p class="text-3xl font-bold mt-2">18</p>
+                <div class="bg-white rounded-2xl shadow-card p-4 sm:p-5">
+                    <div class="flex items-center justify-between mb-2 sm:mb-3">
+                        <h3 class="text-[11px] sm:text-xs font-semibold uppercase tracking-wide text-muted">Credit Hours</h3>
+                        <div class="w-8 h-8 rounded-lg bg-violet-100 text-violet-700 flex items-center justify-center shrink-0">
+                            <i class="bi bi-bar-chart text-sm"></i>
+                        </div>
+                    </div>
+                    <p class="font-display text-2xl sm:text-3xl font-bold">18</p>
+                    <span class="text-xs text-muted">total units</span>
                 </div>
 
-                <div class="bg-white rounded-xl shadow p-6">
-                    <h3 class="text-gray-500">Pending</h3>
-                    <p class="text-3xl font-bold mt-2 text-orange-500">{{ pending_count }}</p>
+                <div class="bg-white rounded-2xl shadow-card p-4 sm:p-5">
+                    <div class="flex items-center justify-between mb-2 sm:mb-3">
+                        <h3 class="text-[11px] sm:text-xs font-semibold uppercase tracking-wide text-muted">Pending</h3>
+                        <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center shrink-0">
+                            <i class="bi bi-hourglass-split text-sm"></i>
+                        </div>
+                    </div>
+                    <p class="font-display text-2xl sm:text-3xl font-bold text-amber-500">{{ pending_count }}</p>
+                    <span class="text-xs text-muted">awaiting approval</span>
                 </div>
 
-                <div class="bg-white rounded-xl shadow p-6">
-                    <h3 class="text-gray-500">Explore Courses</h3>
-                    <a href="{% url 'course_list' %}" class="inline-flex items-center mt-3 text-purple-700 font-semibold hover:text-purple-600">
-                        Browse all courses <i class="bi bi-arrow-right ml-2"></i>
-                    </a>
-                </div>
-
-                <div class="bg-white rounded-xl shadow p-6">
-                    <h3 class="text-gray-500">Announcements</h3>
-                    <p class="text-3xl font-bold mt-2 text-green-500">5</p>
+                <div class="bg-white rounded-2xl shadow-card p-4 sm:p-5">
+                    <div class="flex items-center justify-between mb-2 sm:mb-3">
+                        <h3 class="text-[11px] sm:text-xs font-semibold uppercase tracking-wide text-muted">Announcements</h3>
+                        <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                            <i class="bi bi-megaphone text-sm"></i>
+                        </div>
+                    </div>
+                    <p class="font-display text-2xl sm:text-3xl font-bold text-emerald-500">5</p>
+                    <span class="text-xs text-muted">new updates</span>
                 </div>
 
             </div>
 
-            <!-- Table -->
-            <div class="bg-white rounded-xl shadow p-6">
+            <!-- Explore courses banner -->
+            <a href="{% url 'course_list' %}" class="flex items-center justify-between bg-white rounded-2xl shadow-card p-4 sm:p-5 mb-6 hover:shadow-lg transition-shadow group">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-lg bg-violet-100 text-violet-700 flex items-center justify-center shrink-0">
+                        <i class="bi bi-compass"></i>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-sm sm:text-base">Explore Courses</p>
+                        <p class="text-xs text-muted">Browse everything available this term</p>
+                    </div>
+                </div>
+                <i class="bi bi-arrow-right text-violet-700 text-lg group-hover:translate-x-1 transition-transform"></i>
+            </a>
 
-                <h2 class="text-xl font-bold mb-4">
+            <!-- Table -->
+            <div class="bg-white rounded-2xl shadow-card p-4 sm:p-6">
+
+                <h2 class="font-display text-lg sm:text-xl font-bold mb-4">
                     My Registered Courses
                 </h2>
 
-                <table class="w-full">
+                <div class="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+                <table class="w-full border-collapse min-w-[520px]">
 
-                    <thead class="bg-gray-100">
-
+                    <thead>
                         <tr>
-                            <th class="p-3 text-left">Code</th>
-                            <th class="p-3 text-left">Course</th>
-                            <th class="p-3 text-left">Units</th>
-                            <th class="p-3 text-left">Status</th>
+                            <th class="text-left text-[11px] uppercase tracking-wide font-bold text-muted px-3 py-2.5 bg-[#FAF9FE] border-y border-violet-100 rounded-l-lg">Code</th>
+                            <th class="text-left text-[11px] uppercase tracking-wide font-bold text-muted px-3 py-2.5 bg-[#FAF9FE] border-y border-violet-100">Course</th>
+                            <th class="text-left text-[11px] uppercase tracking-wide font-bold text-muted px-3 py-2.5 bg-[#FAF9FE] border-y border-violet-100">Units</th>
+                            <th class="text-left text-[11px] uppercase tracking-wide font-bold text-muted px-3 py-2.5 bg-[#FAF9FE] border-y border-violet-100 rounded-r-lg">Status</th>
                         </tr>
-
                     </thead>
 
                     <tbody>
 
                         {% for registration in registrations %}
-                        <tr class="border-b">
-                            <td class="p-3">{{ registration.course.code }}</td>
-                            <td class="p-3">{{ registration.course.title }}</td>
-                            <td class="p-3">{{ registration.course.credit_hours }}</td>
-                            <td class="p-3">
-                                <span class="{% if registration.status == 'approved' %}bg-green-100 text-green-700{% elif registration.status == 'rejected' %}bg-red-100 text-red-700{% else %}bg-yellow-100 text-yellow-700{% endif %} px-3 py-1 rounded-full">
+                        <tr class="hover:bg-[#FAF9FE] transition-colors">
+                            <td class="px-3 py-4 text-sm font-bold border-b border-violet-100">{{ registration.course.code }}</td>
+                            <td class="px-3 py-4 text-sm font-medium border-b border-violet-100">{{ registration.course.title }}</td>
+                            <td class="px-3 py-4 text-sm text-inksoft border-b border-violet-100">{{ registration.course.credit_hours }}</td>
+                            <td class="px-3 py-4 text-sm border-b border-violet-100">
+                                <span class="{% if registration.status == 'approved' %}bg-emerald-100 text-emerald-700{% elif registration.status == 'rejected' %}bg-red-100 text-red-700{% else %}bg-amber-100 text-amber-700{% endif %} inline-flex items-center px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap">
                                     {{ registration.status|title }}
                                 </span>
                             </td>
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="4" class="p-3 text-gray-500">No registrations yet.</td>
+                            <td colspan="4" class="px-3 py-8 text-center text-muted text-sm">
+                                <i class="bi bi-inbox text-2xl block mb-2"></i>
+                                No registrations yet.
+                            </td>
                         </tr>
                         {% endfor %}
 
                     </tbody>
 
                 </table>
+                </div>
 
             </div>
 
@@ -187,6 +283,13 @@
     </main>
 
 </div>
+
+<script>
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('-translate-x-full');
+        document.getElementById('sidebar-overlay').classList.toggle('hidden');
+    }
+</script>
 
 </body>
 </html>

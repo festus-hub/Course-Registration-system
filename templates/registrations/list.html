@@ -38,12 +38,26 @@
                             </span>
                         </td>
                         <td class="p-3">{{ registration.registered_at }}</td>
-                        <td class="p-3">
-                            <a href="{% url 'update_registration_status' registration.pk %}" class="text-blue-600 hover:underline">Update</a>
-                            <a href="{% url 'delete_registration' registration.pk %}" class="text-red-600 hover:underline ml-4">Delete</a>
-                            <a href="{% url 'view_registration' registration.pk %}" class="text-gray-600 hover:underline ml-4">View</a>
-                            <a href="{% url 'download_registration_pdf' registration.pk %}" class="text-gray-600 hover:underline ml-4">Download PDF</a>
-                        </td>
+                       <td class="p-3">
+    <div class="flex gap-2">
+        <a href="{% url 'update_registration_status' registration.pk %}" 
+           class="px-3 py-1.5 text-sm font-medium text-blue-700 bg-blue-100 rounded-lg hover:bg-blue-200 transition-colors">
+            Update
+        </a>
+        <a href="{% url 'delete_registration' registration.pk %}" 
+           class="px-3 py-1.5 text-sm font-medium text-red-700 bg-red-100 rounded-lg hover:bg-red-200 transition-colors">
+            Delete
+        </a>
+        <a href="{% url 'view_registration' registration.pk %}" 
+           class="px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+            View
+        </a>
+        <a href="{% url 'download_registration_pdf' registration.pk %}" 
+           class="px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+            Download PDF
+        </a>
+    </div>
+</td>
                     </tr>
                     {% empty %}
                     <tr>

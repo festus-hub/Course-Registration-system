@@ -3,9 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>view</title>
+    <title>Registration Details</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Sora', 'sans-serif'],
+                    },
+                    colors: {
+                        violet: {
+                            900: '#2E1065',
+                            800: '#3E1A78',
+                            700: '#4C1D95',
+                            500: '#7C3AED',
+                            100: '#EDE7FB',
+                        },
+                        ink: '#1E1B2E',
+                        inksoft: '#5B5670',
+                        muted: '#8B8699',
+                        lime: '#B7F04C',
+                    },
+                    boxShadow: {
+                        card: '0 1px 2px rgba(46,16,101,0.04), 0 8px 24px -12px rgba(46,16,101,0.12)',
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-display { font-family: 'Sora', sans-serif; }
+    </style>
 </head>
-<body>
-    
+
+<body class="bg-[#F3F1FA] text-ink antialiased min-h-screen">
+
+<div class="max-w-3xl mx-auto px-4 sm:px-8 py-6 sm:py-10">
+
+
+
+    <!-- Header -->
+    <div class="flex items-start sm:items-center justify-between flex-wrap gap-4 mb-6">
+        <div>
+            <h1 class="font-display text-xl sm:text-2xl font-bold tracking-tight">Registration Details</h1>
+            <p class="text-sm text-muted mt-1">Reference ID: #{{ registration.id }}</p>
+        </div>
+
+        <span class="{% if registration.status == 'approved' %}bg-emerald-100 text-emerald-700{% elif registration.status == 'rejected' %}bg-red-100 text-red-700{% else %}bg-amber-100 text-amber-700{% endif %} inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold">
+            <i class="bi {% if registration.status == 'approved' %}bi-check-circle-fill{% elif registration.status == 'rejected' %}bi-x-circle-fill{% else %}bi-hourglass-split{% endif %}"></i>
+            {{ registration.status|title }}
+        </span>
+    </div>
+
+    <!-- Student card -->
+    <div class="bg-white rounded-2xl shadow-card p-5 sm:p-6 mb-5">
+        <h2 class="text-[11px] font-bold uppercase tracking-wide text-muted mb-4">Student</h2>
+        <div class="flex items-center gap-4">
+            <div class="w-14 h-14 rounded-full bg-gradient-to-br from-violet-500 to-violet-900 text-white flex items-center justify-center font-display font-bold text-xl shrink-0">
+                {{ registration.student.user.username|default:'S'|first|upper }}
+            </div>
+            <div class="min-w-0">
+                <p class="font-semibold text-base truncate">{{ registration.student.user.get_full_name|default:registration.student.user.username }}</p>
+                <p class="text-sm text-muted truncate">{{ registration.student.user.email }}</p>
+                {% if registration.student.matric_number %}
+                <p class="text-xs text-muted mt-0.5">Matric No: {{ registration.student.matric_number }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Course details card -->
+    <div class="bg-white rounded-2xl shadow-card p-5 sm:p-6 mb-5">
+        <h2 class="text-[11px] font-bold uppercase tracking-wide text-muted mb-4">Course</h2>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div>
+                <p class="text-xs text-muted mb-1">Code</p>
+                <p class="font-bold text-sm">{{ registration.course.code }}</p>
+            </div>
+            <div class="col-span-2 sm:col-span-2">
+                <p class="text-xs text-muted mb-1">Title</p>
+                <p class="font-semibold text-sm">{{ registration.course.title }}</p>
+            </div>
+            <div>
+                <p class="text-xs text-muted mb-1">Units</p>
+                <p class="font-bold text-sm">{{ registration.course.credit_hours }}</p>
+            </div>
+        </div>
+
+        <div class="h-px bg-violet-100 my-4"></div>
+
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <p class="text-xs text-muted mb-1">Date Registered</p>
+                <p class="text-sm font-medium">{{ registration.registered_at|date:"M d, Y — H:i" }}</p>
+            </div>
+            <div>
+                <p class="text-xs text-muted mb-1">Semester</p>
+                <p class="text-sm font-medium">{{ registration.course.semester|default:"—" }}</p>
+            </div>
+        </div>
+    </div>
+
+  
+</div>
+
 </body>
 </html>
