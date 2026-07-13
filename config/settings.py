@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from django.templatetags.static import static
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,6 +33,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'unfold',
+    'unfold.contrib.filters',    
+    'unfold.contrib.forms',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -143,3 +149,37 @@ EMAIL_HOST_PASSWORD = 'dnue maql srke ushx'
 
 DEFAULT_FROM_EMAIL = 'noreply@courseregistration.com'
 SERVER_EMAIL = 'noreply@courseregistration.com'
+
+
+
+UNFOLD = {
+    "SITE_TITLE": "CourseHub Admin",
+    "SITE_HEADER": "CourseHub",
+    "SITE_SUBHEADER": "Admin Dashboard",
+    "SITE_URL": "/",
+ 
+    "SHOW_HISTORY": True,
+    "SHOW_VIEW_ON_SITE": True,
+ 
+    "COLORS": {
+        "primary": {
+            "50":  "oklch(97.7% 0.014 308.299)",
+            "100": "oklch(94.6% 0.033 307.174)",
+            "200": "oklch(90.2% 0.060 306.703)",
+            "300": "oklch(82.7% 0.108 306.383)",
+            "400": "oklch(72.2% 0.177 305.504)",
+            "500": "oklch(62.7% 0.233 303.900)",   
+            "600": "oklch(55.8% 0.252 302.321)",
+            "700": "oklch(49.6% 0.237 301.924)",  
+            "800": "oklch(43.8% 0.198 303.724)",
+            "900": "oklch(38.1% 0.166 304.987)",
+            "950": "oklch(29.1% 0.143 302.717)",
+        },
+    },
+ 
+   
+    "SIDEBAR": {
+        "show_search": True,
+        "show_all_applications": True,
+    },
+}

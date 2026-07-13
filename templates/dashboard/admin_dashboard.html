@@ -26,9 +26,7 @@
 
         <div class="p-6 flex items-center justify-between border-b border-blue-800">
             <span class="text-2xl font-bold">CRS Admin</span>
-            <button @click="sidebarOpen = false" class="md:hidden text-white/80 hover:text-white">
-                <i class="bi bi-x-lg text-xl"></i>
-            </button>
+           
         </div>
 
         <nav class="mt-6 space-y-1">
@@ -47,6 +45,13 @@
                class="flex items-center gap-3 px-6 py-3 border-l-4 border-transparent hover:bg-blue-800 transition-colors duration-150">
                 <i class="bi bi-clipboard-check"></i> Registrations
             </a>
+            <a href="{% url 'course_list' %}"
+               class="flex items-center gap-3 px-6 py-3 border-l-4 border-transparent hover:bg-blue-800 transition-colors duration-150">
+                <i class="bi bi-journal-bookmark"></i> Courses
+            </a>
+            <a href="{% url 'department_list' %}"
+               class="flex items-center gap-3 px-6 py-3 border-l-4 border-transparent hover:bg-blue-800 transition-colors duration-150">
+                <i class="bi bi-building"></i> Departments
 
             <a href="{% url 'logout' %}"
                class="flex items-center gap-3 px-6 py-3 border-l-4 border-transparent hover:bg-blue-800 transition-colors duration-150">
@@ -64,10 +69,6 @@
         <header class="bg-white shadow px-4 md:px-6 py-4 flex justify-between items-center gap-4">
 
             <div class="flex items-center gap-3">
-                <button @click="sidebarOpen = true" class="md:hidden text-gray-600 hover:text-gray-900">
-                
-                    <i class="bi bi-list text-2xl"></i>
-                </button>
                 <h1 class="text-xl md:text-2xl font-bold">Dashboard</h1>
             </div>
 

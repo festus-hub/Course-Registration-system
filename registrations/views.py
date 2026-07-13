@@ -4,6 +4,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 
 from .models import CourseRegistration
+from .forms import CourseRegistrationForm
 
 
 @login_required
@@ -66,9 +67,15 @@ def download_registration_pdf(request, pk):
 
 def registration_edit(request, pk):
     registration = get_object_or_404(CourseRegistration, pk=pk)
+ 
     if request.method == 'POST':
-        
-        return redirect('registration_list')
-    return render(request, 'registrations/edit.html', {'registration': registration})
+        form = CourseRegistrationForm(request.POST, instance=registration)
+        if form.is_valid():
+            form.save()
+            return redirect('registration_list')
+    else:
+        form = CourseRegistrationForm(instance=registration)
+ 
+    return render(request, 'registrations/edit.html', {'form': form,'registration': registration,})
 
 

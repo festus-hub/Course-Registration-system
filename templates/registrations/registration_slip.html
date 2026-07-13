@@ -30,7 +30,11 @@
                     <td class="p-4">{{ registration.course.code }}</td>
                     <td class="p-4">{{ registration.course.title }}</td>
                     <td class="p-4">{{ registration.course.credit_hours }}</td>
-                    <td class="p-4">{{ registration.status|title }}</td>
+                    <td class="p-4">
+                         <span class="px-3 py-1 rounded-full {% if registration.status == 'approved' %}bg-green-100 text-green-700{% elif registration.status == 'rejected' %}bg-red-100 text-red-700{% else %}bg-yellow-100 text-yellow-700{% endif %}">
+                            {{ registration.status|title }}
+                        </span>
+                    </td>
                 </tr>
                 {% empty %}
                 <tr>
