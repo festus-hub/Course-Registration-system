@@ -1,11 +1,19 @@
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
 from courses.models import Course
 from registrations.models import CourseRegistration
 from students.models import Student
+from .forms import StudentForm
 
+
+# ---------------------------------------------------------------------------
+# STUDENT SELF-SERVICE VIEWS
+# A logged-in student manages only their own record. Unchanged from your
+# original file — pasted here as-is so everything lives in one views.py.
+# ---------------------------------------------------------------------------
 
 @login_required
 def students_dashboard(request):
@@ -67,3 +75,75 @@ def student_registrations_view(request):
         'student': student,
         'registrations': registrations,
     })
+
+
+# ---------------------------------------------------------------------------
+# ADMIN STUDENT-MANAGEMENT VIEWS
+# An admin (is_staff=True) manages every student's record. Locked down with
+# @staff_member_required so a regular logged-in student can't reach these
+# even if they guess the URL.
+# ---------------------------------------------------------------------------
+
+@staff_member_required
+def student_list(request):
+    students = Student.objects.select_related('user', 'department').order_by('student_id')
+
+    department_id = request.GET.get('department')
+    if department_id:
+        students = students.filter(department_id=department_id)
+
+    from departments.models import Department
+    departments = Department.objects.all().order_by('name')
+
+    return render(request, 'students/manage/list.html', {
+        'students': students,
+        'departments': departments,
+        'selected_department': department_id,
+    })
+
+
+@staff_member_required
+def student_detail(request, pk):
+    student = get_object_or_404(Student.objects.select_related('user', 'department'), pk=pk)
+    registrations = student.registrations.select_related('course').order_by('-registered_at')
+    return render(request, 'students/manage/detail.html', {
+        'student': student,
+        'registrations': registrations,
+    })
+
+
+@staff_member_required
+def student_create(request):
+    if request.method == 'POST':
+        form = StudentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Student created successfully.')
+            return redirect('student_list')
+    else:
+        form = StudentForm()
+    return render(request, 'students/manage/form.html', {'form': form, 'is_edit': False})
+
+
+@staff_member_required
+def student_edit(request, pk):
+    student = get_object_or_404(Student, pk=pk)
+    if request.method == 'POST':
+        form = StudentForm(request.POST, instance=student)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Student updated successfully.')
+            return redirect('student_list')
+    else:
+        form = StudentForm(instance=student)
+    return render(request, 'students/manage/form.html', {'form': form, 'is_edit': True, 'student': student})
+
+
+@staff_member_required
+def student_delete(request, pk):
+    student = get_object_or_404(Student, pk=pk)
+    if request.method == 'POST':
+        student.delete()
+        messages.success(request, 'Student removed successfully.')
+        return redirect('student_list')
+    return render(request, 'students/manage/confirm_delete.html', {'student': student})
