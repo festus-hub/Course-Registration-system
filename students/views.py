@@ -9,12 +9,6 @@ from students.models import Student
 from .forms import StudentForm
 
 
-# ---------------------------------------------------------------------------
-# STUDENT SELF-SERVICE VIEWS
-# A logged-in student manages only their own record. Unchanged from your
-# original file — pasted here as-is so everything lives in one views.py.
-# ---------------------------------------------------------------------------
-
 @login_required
 def students_dashboard(request):
     student = Student.objects.filter(user=request.user).first()
@@ -76,13 +70,6 @@ def student_registrations_view(request):
         'registrations': registrations,
     })
 
-
-# ---------------------------------------------------------------------------
-# ADMIN STUDENT-MANAGEMENT VIEWS
-# An admin (is_staff=True) manages every student's record. Locked down with
-# @staff_member_required so a regular logged-in student can't reach these
-# even if they guess the URL.
-# ---------------------------------------------------------------------------
 
 @staff_member_required
 def student_list(request):
