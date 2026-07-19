@@ -49,6 +49,10 @@ INSTALLED_APPS = [
     'registrations',
     'students',
     'dashboard',
+    'drf_spectacular',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -90,6 +94,18 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+ 
+SPECTACULAR_SETTINGS = {
+    "TITLE": "CourseHub API",
+    "DESCRIPTION": "REST API for managing departments, courses, students, and course registrations.",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "COMPONENT_SPLIT_REQUEST": True,  
+}
+
 
 
 # Password validation
