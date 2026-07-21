@@ -1,14 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 from .models import Department
 from .forms import DepartmentForm
 
 
+@staff_member_required
 def department_list(request):
     departments = Department.objects.all().order_by('name')
     return render(request, 'departments/list.html', {'departments': departments})
 
 
+@staff_member_required
 def department_create(request):
     if request.method == 'POST':
         form = DepartmentForm(request.POST)
@@ -21,6 +24,7 @@ def department_create(request):
     return render(request, 'departments/form.html', {'form': form, 'is_edit': False})
 
 
+@staff_member_required
 def department_edit(request, pk):
     department = get_object_or_404(Department, pk=pk)
     if request.method == 'POST':
@@ -34,6 +38,7 @@ def department_edit(request, pk):
     return render(request, 'departments/form.html', {'form': form, 'is_edit': True, 'department': department})
 
 
+@staff_member_required
 def department_delete(request, pk):
     department = get_object_or_404(Department, pk=pk)
     if request.method == 'POST':
