@@ -1,427 +1,305 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Registration System</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>CourseHub — Course Registration System</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Sora', 'sans-serif'] },
+                    colors: {
+                        violet: { 900: '#2E1065', 800: '#3E1A78', 700: '#4C1D95', 500: '#7C3AED', 100: '#EDE7FB' },
+                        ink: '#1E1B2E', inksoft: '#5B5670', muted: '#8B8699', lime: '#B7F04C',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-display { font-family: 'Sora', sans-serif; }
+        html { scroll-behavior: smooth; }
+    </style>
 </head>
 
-<body class="bg-gray-50 pt-24">
+<body class="bg-white text-ink antialiased">
 
-<nav class="bg-white shadow-md fixed top-0 left-0 right-0 z-50">
-    <div class="container mx-auto px-8">
+<!-- NAV -->
+<nav class="bg-white/90 backdrop-blur border-b border-violet-100 fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+        <div class="flex justify-between items-center h-18 py-3">
 
-        <div class="flex justify-between items-center h-20">
+            <a href="#home" class="flex items-center gap-2.5">
+                <img src="{% static 'images/hatlog.png' %}" alt="CourseHub logo" class="h-9 w-auto object-contain">
+                <span class="font-display text-xl font-bold text-violet-800">CourseHub</span>
+            </a>
 
-            <div class="flex items-center  p-4">
-              <img  src="static/images/hatlog.png" 
-                    alt="Hat Logo" 
-                     class="h-12 w-auto object-contain md:h-16" 
-                      />  
-                                
-                        <h1 class="text-2xl font-bold text-blue-700">CourseHub</h1>
-            </div>
-
-            <ul class="hidden md:flex space-x-8 font-medium">
-                <li><a href="#home" class="hover:text-blue-600">Home</a></li>
-                <li><a href="#about" class="hover:text-blue-600">About</a></li>
-                <li><a href="#features" class="hover:text-blue-600">Features</a></li>
-                <li><a href="#contact" class="hover:text-blue-600">Contact</a></li>
+            <ul class="hidden md:flex items-center gap-8 font-medium text-sm text-inksoft">
+                <li><a href="#home" class="hover:text-violet-700 transition-colors">Home</a></li>
+                <li><a href="#about" class="hover:text-violet-700 transition-colors">About</a></li>
+                <li><a href="#features" class="hover:text-violet-700 transition-colors">Features</a></li>
+                <li><a href="#contact" class="hover:text-violet-700 transition-colors">Contact</a></li>
             </ul>
 
-            <div class="space-x-3">
+            <div class="hidden md:flex items-center gap-3">
                 <a href="{% url 'login' %}"
-                    class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700">
-                              Login
+                   class="px-5 py-2.5 rounded-xl text-sm font-semibold text-violet-700 hover:bg-violet-100 transition-colors">
+                    Login
                 </a>
-                 <a href="{% url 'register' %}"
-                    class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700">
-                              Register
+                <a href="{% url 'register' %}"
+                   class="px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-violet-700 hover:bg-violet-800 transition-colors">
+                    Register
                 </a>
-
             </div>
 
+            <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="md:hidden text-2xl text-violet-800">
+                <i class="bi bi-list"></i>
+            </button>
         </div>
+    </div>
 
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-violet-100 px-5 py-4 space-y-3">
+        <a href="#home" onclick="toggleMobileMenu()" class="block font-medium text-inksoft hover:text-violet-700">Home</a>
+        <a href="#about" onclick="toggleMobileMenu()" class="block font-medium text-inksoft hover:text-violet-700">About</a>
+        <a href="#features" onclick="toggleMobileMenu()" class="block font-medium text-inksoft hover:text-violet-700">Features</a>
+        <a href="#contact" onclick="toggleMobileMenu()" class="block font-medium text-inksoft hover:text-violet-700">Contact</a>
+        <div class="flex gap-3 pt-3 border-t border-violet-100">
+            <a href="{% url 'login' %}" class="flex-1 text-center px-4 py-2.5 rounded-xl text-sm font-semibold text-violet-700 bg-violet-100">Login</a>
+            <a href="{% url 'register' %}" class="flex-1 text-center px-4 py-2.5 rounded-xl text-sm font-semibold text-white bg-violet-700">Register</a>
+        </div>
     </div>
 </nav>
 
+<!-- HERO -->
+<section id="home" class="pt-32 pb-16 sm:pt-40 sm:pb-24 bg-gradient-to-b from-violet-100/60 to-white">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
-<section id="home" class="bg-blue-50 py-20">
+            <div class="text-center lg:text-left">
+                <span class="inline-flex items-center gap-1.5 bg-violet-100 text-violet-700 px-4 py-2 rounded-full text-sm font-semibold">
+                    <i class="bi bi-stars"></i> Welcome to CourseHub
+                </span>
 
-<div class="container mx-auto px-8">
+                <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold mt-6 leading-tight tracking-tight">
+                    Easy Course Registration
+                    <span class="text-violet-700">for a Better Future</span>
+                </h1>
 
-<div class="grid md:grid-cols-2 gap-12 items-center">
-
-<div>
-
-<span class="bg-blue-200 text-blue-700 px-4 py-2 rounded-full">
-Welcome to CourseHub
-</span>
-
-<h1 class="text-5xl font-bold mt-6 leading-tight">
-
-Easy Course Registration
-
-<br>
-
-for a Better Future
-
-</h1>
-
-<p class="mt-6 text-gray-600 text-lg">
-
-            Browse available courses,register with ease,and manage your academic journey.
-
-</p>
-
-       
-
-       <a href="{% url 'course_list' %}"
-              class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 inline-flex items-center">
-            Browse Courses
-                <i class="bi bi-arrow-right ms-2"></i>
-        </a>
-
-        <a href="{% url 'register' %}"
-                    class="bg-white text-blue-500 px-8 py-3 rounded-lg hover:bg-purple-500">
-                              Register
-                <span class="bi bi-person-add"></span>
-
-        </a>
-
-
-</div>
-
-</div>
-
-<div class="grid grid-cols-2 ">
-   
-
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-<section id="about" class="py-20 bg-white">
-    <h1 class="text-center text-blue-700 font-bold ">ABOUT</h1>
-    <div class="container mx-auto px-8">
-
-        <h2 class="text-center text-4xl font-bold">
-
-            About CourseHub
-
-        </h2>
-
-        <p class="text-center text-gray-500 mt-3">
-
-            A simple and secure course registration system.
-
-        </p>
-
-        <div class="grid md:grid-cols-2 gap-8 mt-14">
-
-            <div class="bg-gray-50 p-8 rounded-xl shadow hover:shadow-lg">
-
-                <h3 class="font-bold text-xl text-center mt-5">
-
-                    Our Mission
-
-                </h3>
-
-                <p class="text-center mt-3 text-gray-600">
-
-                    To provide a seamless and efficient course registration experience for students.
-
+                <p class="mt-6 text-inksoft text-base sm:text-lg max-w-xl mx-auto lg:mx-0">
+                    Browse available courses, register with ease, and manage your entire academic journey in one place.
                 </p>
 
+                <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+                    <a href="{% url 'course_list' %}"
+                       class="inline-flex items-center justify-center gap-2 bg-violet-700 text-white px-7 py-3.5 rounded-xl font-semibold hover:bg-violet-800 transition-colors">
+                        Browse Courses <i class="bi bi-arrow-right"></i>
+                    </a>
+                    <a href="{% url 'register' %}"
+                       class="inline-flex items-center justify-center gap-2 bg-white text-violet-700 border border-violet-200 px-7 py-3.5 rounded-xl font-semibold hover:bg-violet-100 transition-colors">
+                        <i class="bi bi-person-plus"></i> Register
+                    </a>
+                </div>
+
+                <div class="mt-10 flex items-center gap-6 justify-center lg:justify-start text-sm text-muted">
+                    <div class="flex items-center gap-2">
+                        <i class="bi bi-people-fill text-violet-700"></i> 5,000+ Students
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="bi bi-journal-check text-violet-700"></i> 200+ Courses
+                    </div>
+                </div>
             </div>
 
-            <div class="bg-gray-50 p-8 rounded-xl shadow hover:shadow-lg">
+            <div class="relative">
+                <div class="absolute -top-6 -right-6 w-40 h-40 bg-lime/30 rounded-full blur-3xl"></div>
+                <div class="absolute -bottom-8 -left-8 w-52 h-52 bg-violet-300/30 rounded-full blur-3xl"></div>
+                <img src="{% static 'images/saves.png' %}"
+                     alt="Students collaborating"
+                     class="relative w-full h-[320px] sm:h-[420px] lg:h-[460px] object-cover rounded-3xl shadow-2xl">
+            </div>
 
-                <h3 class="font-bold text-xl text-center mt-5">
+        </div>
+    </div>
+</section>
 
-                    Our Vision
+<!-- ABOUT -->
+<section id="about" class="py-16 sm:py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
 
-                </h3>
+        <div class="text-center mb-14">
+            <span class="text-violet-700 font-bold text-sm uppercase tracking-wide">About</span>
+            <h2 class="font-display text-3xl sm:text-4xl font-bold mt-2">About CourseHub</h2>
+            <p class="text-muted mt-3 max-w-xl mx-auto">A simple and secure course registration system.</p>
+        </div>
 
-                <p class="text-center mt-3 text-gray-600">
+        <div class="grid md:grid-cols-2 gap-6 lg:gap-8 items-center">
 
-                    To be the leading platform for course registration, empowering students to achieve their academic goals.
+            <img src="{% static 'images/about-campus.jpg' %}"
+                 alt="Campus life"
+                 class="w-full h-[280px] sm:h-[340px] object-cover rounded-2xl shadow-lg order-2 md:order-1">
 
+            <div class="order-1 md:order-2 grid sm:grid-cols-1 gap-6">
+                <div class="bg-violet-100/40 p-7 sm:p-8 rounded-2xl border border-violet-100">
+                    <div class="w-11 h-11 rounded-xl bg-violet-700 text-white flex items-center justify-center mb-4">
+                        <i class="bi bi-bullseye"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-lg">Our Mission</h3>
+                    <p class="mt-2 text-inksoft text-sm leading-relaxed">
+                        To provide a seamless and efficient course registration experience for every student.
+                    </p>
+                </div>
+
+                <div class="bg-violet-100/40 p-7 sm:p-8 rounded-2xl border border-violet-100">
+                    <div class="w-11 h-11 rounded-xl bg-violet-700 text-white flex items-center justify-center mb-4">
+                        <i class="bi bi-eye"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-lg">Our Vision</h3>
+                    <p class="mt-2 text-inksoft text-sm leading-relaxed">
+                        To be the leading platform for course registration, empowering students to reach their academic goals.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="py-16 sm:py-24 bg-[#FAF9FE]">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+
+        <div class="text-center mb-14">
+            <span class="text-violet-700 font-bold text-sm uppercase tracking-wide">Features</span>
+            <h2 class="font-display text-3xl sm:text-4xl font-bold mt-2">Everything You Need</h2>
+            <p class="text-muted mt-3 max-w-xl mx-auto">Simple and secure course registration, start to finish.</p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+
+            <div class="bg-white p-7 rounded-2xl shadow-sm border border-violet-100 hover:shadow-lg transition-shadow text-center">
+                <div class="w-14 h-14 mx-auto rounded-2xl bg-violet-100 flex items-center justify-center text-2xl text-violet-700 mb-4">
+                    <i class="bi bi-book-fill"></i>
+                </div>
+                <h3 class="font-display font-bold text-base">Browse Courses</h3>
+                <p class="mt-2 text-sm text-inksoft">Explore available courses quickly.</p>
+            </div>
+
+            <div class="bg-white p-7 rounded-2xl shadow-sm border border-violet-100 hover:shadow-lg transition-shadow text-center">
+                <div class="w-14 h-14 mx-auto rounded-2xl bg-violet-100 flex items-center justify-center text-2xl text-violet-700 mb-4">
+                    <i class="bi bi-pencil-fill"></i>
+                </div>
+                <h3 class="font-display font-bold text-base">Easy Registration</h3>
+                <p class="mt-2 text-sm text-inksoft">Register in only a few clicks.</p>
+            </div>
+
+            <div class="bg-white p-7 rounded-2xl shadow-sm border border-violet-100 hover:shadow-lg transition-shadow text-center">
+                <div class="w-14 h-14 mx-auto rounded-2xl bg-violet-100 flex items-center justify-center text-2xl text-violet-700 mb-4">
+                    <i class="bi bi-clipboard-check-fill"></i>
+                </div>
+                <h3 class="font-display font-bold text-base">Track Progress</h3>
+                <p class="mt-2 text-sm text-inksoft">View registered courses anytime.</p>
+            </div>
+
+            <div class="bg-white p-7 rounded-2xl shadow-sm border border-violet-100 hover:shadow-lg transition-shadow text-center">
+                <div class="w-14 h-14 mx-auto rounded-2xl bg-violet-100 flex items-center justify-center text-2xl text-violet-700 mb-4">
+                    <i class="bi bi-shield-fill-check"></i>
+                </div>
+                <h3 class="font-display font-bold text-base">Secure System</h3>
+                <p class="mt-2 text-sm text-inksoft">Your information is protected.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="py-14 sm:py-20 bg-gradient-to-br from-violet-800 to-violet-600">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+
+            <div>
+                <h2 class="font-display text-2xl sm:text-3xl font-bold text-white flex items-center gap-2.5 justify-center md:justify-start">
+                    <i class="bi bi-mortarboard-fill text-lime"></i>
+                    Ready to start your learning journey?
+                </h2>
+                <p class="text-violet-100 mt-2">Join thousands of students using CourseHub.</p>
+            </div>
+
+            <a href="{% url 'register' %}"
+               class="inline-flex items-center gap-2 bg-white text-violet-800 px-7 py-3.5 rounded-xl font-semibold hover:bg-violet-100 transition-colors shrink-0">
+                Get Started <i class="bi bi-arrow-right"></i>
+            </a>
+
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact" class="bg-white py-14 sm:py-16 border-t border-violet-100">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+
+            <div>
+                <h2 class="font-display font-bold text-xl text-violet-800 flex items-center gap-2">
+                    <i class="bi bi-mortarboard-fill"></i> CourseHub
+                </h2>
+                <p class="mt-3 text-muted text-sm">Course Registration System</p>
+            </div>
+
+            <div>
+                <h3 class="font-bold text-sm uppercase tracking-wide text-inksoft">Quick Links</h3>
+                <ul class="mt-4 space-y-2.5 text-sm">
+                    <li><a href="#home" class="text-muted hover:text-violet-700 transition-colors">Home</a></li>
+                    <li><a href="#features" class="text-muted hover:text-violet-700 transition-colors">Features</a></li>
+                    <li><a href="#about" class="text-muted hover:text-violet-700 transition-colors">About</a></li>
+                    <li><a href="#contact" class="text-muted hover:text-violet-700 transition-colors">Contact</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="font-bold text-sm uppercase tracking-wide text-inksoft">Resources</h3>
+                <ul class="mt-4 space-y-2.5 text-sm text-muted">
+                    <li>Help Center</li>
+                    <li>Privacy Policy</li>
+                    <li>Terms</li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="font-bold text-sm uppercase tracking-wide text-inksoft">Contact</h3>
+                <p class="mt-4 text-sm text-muted flex items-center gap-2">
+                    <i class="bi bi-envelope-fill"></i> info@coursehub.com
                 </p>
-
+                <p class="mt-2 text-sm text-muted flex items-center gap-2">
+                    <i class="bi bi-telephone-fill"></i> +254 700 000 000
+                </p>
             </div>
 
         </div>
 
+        <hr class="my-10 border-violet-100">
+
+        <p class="text-center text-muted text-sm">© 2026 CourseHub. All Rights Reserved.</p>
+
     </div>
-</section>
-
-
-<section id="features" class="py-20 bg-white">
-    
-    <h1 class="text-center text-blue-700 font-bold ">FEATURES</h1>
-
-<div class="container mx-auto px-8">
-
-<h2 class="text-center text-4xl font-bold">
-
-Everything You Need
-
-</h2>
-
-<p class="text-center text-gray-500 mt-3">
-
-Simple and secure course registration.
-
-</p>
-
-<div class="grid md:grid-cols-4 gap-8 mt-14">
-
-<div class="bg-gray-50 p-8 rounded-xl shadow hover:shadow-lg">
-
-<div class="text-5xl text-center">
-
-
-
-</div>
-<div class="text-5xl text-center">
-
-<span class="bi-book-fill text-5xl text-blue-600"></span>
-
-
-</div>
-
-<h3 class="font-bold text-xl text-center mt-5">
-    
-Browse Courses
-
-</h3>
-
-<p class="text-center mt-3 text-gray-600">
-
-Explore available courses quickly.
-
-</p>
-
-</div>
-
-<div class="bg-gray-50 p-8 rounded-xl shadow hover:shadow-lg">
-
-<div class="text-5xl text-center">
-<span class="bi bi-pencil-fill text-5xl text-blue-600"></span>
-
-
-</div>
-<h3 class="font-bold text-xl text-center mt-5">
-
-Easy Registration
-
-</h3>
-
-<p class="text-center mt-3 text-gray-600">
-
-Register in only a few clicks.
-
-</p>
-
-</div>
-
-<div class="bg-gray-50 p-8 rounded-xl shadow hover:shadow-lg">
-
-<div class="text-5xl text-center">
-<span class="bi bi-clipboard-fill text-blue-600"></span>
-
-</div>
-
-<h3 class="font-bold text-xl text-center mt-5">
-
-Track Progress
-
-</h3>
-
-<p class="text-center mt-3 text-gray-600">
-
-View registered courses anytime.
-
-</p>
-
-</div>
-
-<div class="bg-gray-50 p-8 rounded-xl shadow hover:shadow-lg">
-
-<div class="text-5xl text-center ">
-<span class="bi bi-shield-fill text-blue-600"></span>
-
-</div>
-
-<h3 class="font-bold text-xl text-center mt-5">
-
-Secure System
-
-</h3>
-
-<p class="text-center mt-3 text-gray-600">
-
-Your information is protected.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<section class="py-16 bg-blue-100">
-
-<div class="container mx-auto px-8">
-
-<div class="flex flex-col md:flex-row justify-between items-center">
-
-<div>
-
-<h2 class="text-3xl font-bold">
-    <span class="bi bi-mortarboard-fill text-blue-700"></span>
-
-Ready to Start your learning journey?
-
-</h2>
-
-<p class="text-gray-700 mt-3">
-
-Join thousands of students using CourseHub.
-
-</p>
-
-</div>
-
-    <a href="{% url 'register' %}"
-                    class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700">
-                              Get Started
-<span class="bi-arrow-right"></span>
-    </a>
-
-</div>
-
-</div>
-
-</section>
-
-<footer id="contact" class="bg-white py-12">
-
-<div class="container mx-auto px-8">
-
-<div class="grid md:grid-cols-4 gap-10">
-
-<div>
-
-<h2 class="font-bold text-2xl text-blue-700">
-    <span class="bi bi-mortarboard-fill"></span>
-
-CourseHub
-
-</h2>
-
-<p class="mt-3 text-gray-500">
-
-Course Registration System
-
-</p>
-
-</div>
-
-<div>
-
-<h3 class="font-bold">
-
-Quick Links
-
-</h3>
-
-<ul class="mt-3 space-y-2">
-
-<li> <a href="#home" class="text-gray-600 hover:text-blue-700">Home</a></li>
-
-<li><a href="#features" class="text-gray-600 hover:text-blue-700">Features</a></li>
-
-<li><a href="#about" class="text-gray-600 hover:text-blue-700">About</a></li>
-
-<li><a href="#contact" class="text-gray-600 hover:text-blue-700">Contact</a></li>
-
-</ul>
-
-</div>
-
-<div>
-
-<h3 class="font-bold">
-
-Resources
-
-</h3>
-
-<ul class="mt-3 space-y-2">
-
-<li>Help Center</li>
-
-<li>Privacy Policy</li>
-
-<li>Terms</li>
-
-</ul>
-
-</div>
-
-<div>
-
-<h3 class="font-bold">
-
-Contact
-
-</h3>
-
-<p class="mt-3">
-    <span class="bi bi-envelope-fill"></span>
-
-info@coursehub.com
-
-</p>
-
-<p>
-    <span class="bi bi-telephone-fill"></span>
-
-+254 700 000 000
-
-</p>
-
-</div>
-
-</div>
-
-<hr class="my-10">
-
-<p class="text-center text-gray-500">
-
-© 2026 CourseHub. All Rights Reserved.
-
-</p>
-
-</div>
-
 </footer>
+
+<script>
+    function toggleMobileMenu() {
+        document.getElementById('mobile-menu').classList.toggle('hidden');
+    }
+</script>
 
 </body>
 </html>

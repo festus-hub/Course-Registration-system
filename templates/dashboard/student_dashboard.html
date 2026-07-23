@@ -127,21 +127,22 @@
 
             <div class="flex items-center gap-4 sm:gap-5">
 
-                <button class="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-violet-100/60 flex items-center justify-center text-inksoft hover:text-violet-700">
+               <a href="{% url 'student_notifications' %}"
+                    class="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-violet-100/60 flex items-center justify-center text-inksoft hover:text-violet-700">
                     <i class="bi bi-bell text-lg"></i>
                     {% if pending_count %}
                     <span class="absolute top-1.5 right-1.5 w-[7px] h-[7px] rounded-full bg-red-600 border-[1.5px] border-white"></span>
-                    {% endif %}
-                </button>
+                     {% endif %}
+               </a>
 
-                <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 rounded-full bg-gradient-to-br from-violet-500 to-violet-900 text-white flex items-center justify-center font-display font-bold text-sm shrink-0">
-                        {{ student.user.username|default:'S'|first|upper }}
-                    </div>
-                    <span class="hidden sm:inline font-semibold text-sm">
-                        {{ student.user.username|default:'Student' }}
-                    </span>
-                </div>
+                <a href="{% url 'student_profile_view' %}" class="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
+                      <div class="w-9 h-9 rounded-full bg-gradient-to-br from-violet-500 to-violet-900 text-white flex items-center justify-center font-display font-bold text-sm shrink-0">
+                          {{ student.user.username|default:'S'|first|upper }}
+                      </div>
+                      <span class="hidden sm:inline font-semibold text-sm">
+                         {{ student.user.username|default:'Student' }}
+                      </span>
+                </a>
 
             </div>
 
@@ -184,7 +185,7 @@
                             <i class="bi bi-bar-chart text-sm"></i>
                         </div>
                     </div>
-                    <p class="font-display text-2xl sm:text-3xl font-bold">18</p>
+                    <p class="font-display text-2xl sm:text-3xl font-bold">5</p>
                     <span class="text-xs text-muted">total units</span>
                 </div>
 
