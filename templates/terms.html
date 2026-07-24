@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions — CourseHub</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Sora', 'sans-serif'] },
+                    colors: {
+                        violet: { 900: '#2E1065', 800: '#3E1A78', 700: '#4C1D95', 500: '#7C3AED', 100: '#EDE7FB' },
+                        ink: '#1E1B2E', inksoft: '#5B5670', muted: '#8B8699',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-display { font-family: 'Sora', sans-serif; }
+    </style>
+</head>
+
+<body class="bg-white text-ink antialiased">
+
+<div class="max-w-3xl mx-auto px-5 sm:px-8 py-14 sm:py-20">
+
+    <a href="{% url 'landing' %}" class="inline-flex items-center gap-2 text-sm font-semibold text-inksoft hover:text-violet-700 mb-8">
+        <i class="bi bi-arrow-left"></i> Back to CourseHub
+    </a>
+
+    <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-2">Terms & Conditions</h1>
+    <p class="text-sm text-muted mb-10">Last updated: July 2026</p>
+
+    <div class="space-y-8 text-sm sm:text-base text-inksoft leading-relaxed">
+
+        <section>
+            <h2 class="font-display text-lg font-bold text-ink mb-2">1. Acceptance of Terms</h2>
+            <p>By creating an account or using CourseHub ("the Platform"), you agree to be bound by these Terms & Conditions. If you do not agree, please do not use the Platform.</p>
+        </section>
+
+        <section>
+            <h2 class="font-display text-lg font-bold text-ink mb-2">2. Eligibility & Account Registration</h2>
+            <p>You must provide accurate, current information when creating an account. You are responsible for maintaining the confidentiality of your login credentials and for all activity under your account. Notify us immediately if you suspect unauthorized access.</p>
+        </section>
+
+        <section>
+            <h2 class="font-display text-lg font-bold text-ink mb-2">3. Course Registration</h2>
+            <p>Registering for a course through the Platform does not guarantee a seat until your registration status shows as "Approved." Course availability, credit hours, and eligibility requirements are subject to change at the institution's discretion. Duplicate registration for the same course is not permitted.</p>
+        </section>
+
+        <section>
+            <h2 class="font-display text-lg font-bold text-ink mb-2">4. User Conduct</h2>
+            <p>You agree not to misuse the Platform, including but not limited to: attempting to access accounts or data that do not belong to you, interfering with the Platform's normal operation, or submitting false registration information.</p>
+        </section>
+
+        <section>
+            <h2 class="font-display text-lg font-bold text-ink mb-2">5. Data & Privacy</h2>
+            <p>We collect and store personal information (such as your name, email, and academic records) solely to provide and improve the course registration service. We do not sell your personal data to third parties. For details on how your data is handled, see our Privacy Policy.</p>
+        </section>
+
+        <section>
+            <h2 class="font-display text-lg font-bold text-ink mb-2">6. Administrative Access</h2>
+            <p>Staff and administrators of the Platform have access to student records solely for the purpose of managing registrations, departments, and courses. This access is not to be used for any purpose outside official administrative duties.</p>
+        </section>
+
+        <section>
+            <h2 class="font-display text-lg font-bold text-ink mb-2">7. Limitation of Liability</h2>
+            <p>The Platform is provided "as is." We do not guarantee uninterrupted or error-free access and are not liable for any loss or damage resulting from your use of, or inability to use, the Platform.</p>
+        </section>
+
+        <section>
+            <h2 class="font-display text-lg font-bold text-ink mb-2">8. Changes to These Terms</h2>
+            <p>We may update these Terms from time to time. Continued use of the Platform after changes are posted constitutes acceptance of the revised Terms.</p>
+        </section>
+
+        <section>
+            <h2 class="font-display text-lg font-bold text-ink mb-2">9. Contact</h2>
+            <p>Questions about these Terms can be sent to <a href="mailto:info@coursehub.com" class="text-violet-700 font-semibold hover:underline">info@coursehub.com</a>.</p>
+        </section>
+
+    </div>
+
+</div>
+
+</body>
+</html>

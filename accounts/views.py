@@ -182,3 +182,7 @@ def logout_view(request):
     logout(request)
     messages.success(request, "You have logged out successfully.")
     return redirect('landing')
+
+# Terms 
+def terms_view(request):
+    return render(request, 'terms.html')
